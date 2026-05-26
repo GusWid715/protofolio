@@ -11,7 +11,7 @@ export function S1_Welcome() {
       <GhostText text="DARK HOUR" className="bottom-[-2vh] left-[-1vw]" />
 
       <motion.div
-        className="relative z-10 flex flex-col items-center gap-6 mb-[15vh]"
+        className="absolute top-[10vh] z-10 flex flex-col items-center gap-6"
         variants={staggerContainer}
         initial="hidden"
         animate="visible"
@@ -19,18 +19,11 @@ export function S1_Welcome() {
         {/* Judul */}
         <motion.h1
           variants={fadeSlideUp}
-          className="font-bebas text-[clamp(56px,9vw,130px)] tracking-[4px] leading-none text-[#f6fbff] text-center"
+          className="font-bebas text-[clamp(40px,7vw,100px)] tracking-[4px] leading-none text-[#f6fbff] text-center whitespace-nowrap"
         >
-          HI!!! SELAMAT<br />DATANG
+          HI!!! SELAMAT DATANG
         </motion.h1>
 
-        {/* Sub-teks */}
-        <motion.p
-          variants={fadeSlideUp}
-          className="font-orbitron text-[11px] tracking-[6px] text-[#8ef5ff]/70 uppercase"
-        >
-          // SCROLL TO EXPLORE
-        </motion.p>
       </motion.div>
 
       {/* Scroll indicator */}
