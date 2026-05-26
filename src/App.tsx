@@ -1,7 +1,6 @@
 import './index.css'
 import { GlobalOverlays } from '@/components/GlobalOverlays'
 import { StickyCharacter } from '@/components/StickyCharacter'
-import { KeyboardHint } from '@/components/KeyboardHint'
 import { useKeyboardNav } from '@/hooks/useKeyboardNav'
 
 import { S1_Welcome }  from '@/components/sections/S1_Welcome'
@@ -18,7 +17,6 @@ export default function App() {
       {/* ── Global Fixed Layers ──────────────── */}
       <GlobalOverlays />
       <StickyCharacter />
-      <KeyboardHint />
 
       {/* ── Page Content ─────────────────────── */}
       <main className="w-full">
