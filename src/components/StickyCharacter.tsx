@@ -40,17 +40,11 @@ export function StickyCharacter() {
           animate={{
             opacity: 1,
             scale: phase.scale,
-            filter: [
-              'drop-shadow(0 0 10px rgba(0,191,255,0.4))',
-              'drop-shadow(0 0 24px rgba(0,191,255,0.9))',
-              'drop-shadow(0 0 10px rgba(0,191,255,0.4))',
-            ]
           }}
           exit={{ opacity: 0, scale: phase.scale * 0.95 }}
           transition={{
             opacity: { duration: 0.6, ease: 'easeInOut' },
             scale:   { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
-            filter:  { duration: 3.5, repeat: Infinity, ease: 'easeInOut' },
           }}
           style={{
             position: 'absolute',

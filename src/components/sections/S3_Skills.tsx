@@ -4,10 +4,10 @@ import { skillDetailTransition } from '@/animations/variants'
 import { SlashLabel, GhostText } from '@/components/shared'
 
 const SKILLS = [
-  { title: 'Python Programming',  rank: 7, max: 10, desc: 'Extensive experience in writing scripts for data scraping, automation, and backend logic.' },
-  { title: 'Data Analysis (EDA)', rank: 7, max: 10, desc: 'Skilled in exploratory data analysis, data cleaning, and processing unstructured public data.' },
-  { title: 'Machine Learning',    rank: 6, max: 10, desc: 'Proficient in implementing clustering algorithms like KMeans and PCA for data classification.' },
-  { title: 'Web Development',     rank: 6, max: 10, desc: 'Building modern, interactive user interfaces using React.js, Tailwind CSS, and Framer Motion.' },
+  { id: 'I', title: 'Python Programming', subtitle: 'Backend / Automation', rank: 7, max: 10, desc: 'Extensive experience in writing scripts for data scraping, automation, and backend logic.' },
+  { id: 'II', title: 'Data Analysis', subtitle: 'Data Science', rank: 7, max: 10, desc: 'Skilled in exploratory data analysis, data cleaning, and processing unstructured public data.' },
+  { id: 'III', title: 'Machine Learning', subtitle: 'AI / Models', rank: 6, max: 10, desc: 'Proficient in implementing clustering algorithms like KMeans and PCA for data classification.' },
+  { id: 'IV', title: 'Web Development', subtitle: 'Frontend / Fullstack', rank: 6, max: 10, desc: 'Building modern, interactive user interfaces using React.js, Tailwind CSS, and Framer Motion.' },
 ]
 
 export function S3_Skills() {
@@ -26,36 +26,78 @@ export function S3_Skills() {
       <div className="sticky top-0 h-screen overflow-hidden flex items-center justify-center">
         <GhostText text="ARCANA" className="bottom-[-2vh] left-[-1vw]" />
 
-        <div className="relative z-10 w-full max-w-6xl px-12 grid grid-cols-2 gap-16 items-center">
+        <div className="relative z-10 w-full max-w-7xl px-8 grid grid-cols-2 gap-12 items-center">
 
           {/* KIRI — List skill */}
-          <div className="flex flex-col gap-2">
-            <SlashLabel text="// SECTION 03" />
-            <h2 className="font-bebas text-[clamp(36px,4.5vw,64px)] tracking-[3px] text-white mb-6 leading-none">
+          <div className="flex flex-col gap-3">
+            <div className="font-anton text-[72px] leading-[0.9] text-[#f6fbff] tracking-[2px] mb-2 ml-3">
               SKILLS
-            </h2>
-            {SKILLS.map((skill, i) => (
-              <motion.div
-                key={skill.title}
-                className="flex items-center gap-4 cursor-default py-2 px-3"
-                animate={{
-                  opacity: i === activeIdx ? 1 : 0.35,
-                  x: i === activeIdx ? 8 : 0,
-                  scale: i === activeIdx ? 1.02 : 1,
-                }}
-                transition={{ duration: 0.35, ease: 'easeOut' }}
-                style={{
-                  borderLeft: i === activeIdx ? '3px solid var(--cyan)' : '3px solid transparent',
-                }}
-              >
-                <span
-                  className="font-bebas text-[clamp(22px,2.5vw,36px)] tracking-[2px] leading-none"
-                  style={{ color: i === activeIdx ? 'var(--cyan)' : 'var(--text-dim)' }}
+            </div>
+
+            {SKILLS.map((skill, index) => {
+              const isActive = index === activeIdx
+              return (
+                <div
+                  key={skill.title}
+                  className="relative cursor-default"
+                  style={{
+                    opacity: 1, // Let framer-motion handle the opacity if wanted, but reference uses solid opacity
+                    transform: isActive ? "translateX(6px)" : "translateX(0)",
+                    transition: "transform 0.22s ease",
+                  }}
                 >
-                  {skill.title}
-                </span>
-              </motion.div>
-            ))}
+                  <div style={{
+                    position: "relative", 
+                    height: 112,
+                    background: isActive ? "#ffffff" : "#10185f",
+                    clipPath: "polygon(0 0, 97% 0, 100% 100%, 3% 100%)",
+                    boxShadow: isActive ? "10px 8px 0 #d63232" : "0 8px 0 rgba(5,13,59,0.85)",
+                    transition: "background 0.22s ease, box-shadow 0.22s ease",
+                    overflow: "visible",
+                  }}>
+                    {/* BADGE */}
+                    <div style={{
+                      position: "absolute", top: 10, left: -10, width: 56, height: 70,
+                      background: isActive ? "#000" : "#0b113d",
+                      border: `3px solid ${isActive ? "#000" : "#9cf7ff"}`,
+                      clipPath: "polygon(14% 0, 100% 0, 84% 100%, 0 100%)",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      transform: "rotate(-8deg)", boxShadow: "0 4px 0 rgba(0,0,0,0.28)", zIndex: 2,
+                    }}>
+                      <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, color: "#d2fdff", letterSpacing: 1, transform: "rotate(8deg)", display: "block" }}>
+                        {skill.id}
+                      </span>
+                    </div>
+
+                    {/* INNER CONTENT */}
+                    <div style={{ 
+                      position: "absolute", inset: 0, padding: "14px 22px 14px 62px", 
+                      display: "flex", alignItems: "flex-start", justifyContent: "space-between", zIndex: 1 
+                    }}>
+                      <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 48, lineHeight: 0.9, letterSpacing: 1, color: isActive ? "#000" : "#a5f6ff", transition: "color 0.22s ease", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "70%" }}>
+                        {skill.title}
+                      </div>
+                      <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 2, flexShrink: 0 }}>
+                        <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 24, letterSpacing: 2, color: isActive ? "#000" : "#9ffbff", transition: "color 0.22s ease" }}>RANK</div>
+                        <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 56, lineHeight: 0.82, color: isActive ? "#000" : "#9ffbff", transition: "color 0.22s ease" }}>{skill.rank}</div>
+                      </div>
+                    </div>
+
+                    {/* SUBTITLE */}
+                    <div style={{
+                      position: "absolute", left: 64, right: 14, bottom: 12, height: 34,
+                      background: isActive ? "#000" : "#85f4ff",
+                      clipPath: "polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%)",
+                      display: "flex", alignItems: "center", padding: "0 18px", zIndex: 1,
+                    }}>
+                      <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 24, lineHeight: 1, letterSpacing: 1, color: isActive ? "#fff" : "#041238" }}>
+                        {skill.subtitle}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
           </div>
 
           {/* KANAN — Detail skill aktif */}
@@ -67,47 +109,50 @@ export function S3_Skills() {
                 initial="initial"
                 animate="animate"
                 exit="exit"
-                className="flex flex-col gap-5"
                 style={{
-                  background: 'var(--bg-card)',
-                  border: '1px solid var(--border-subtle)',
-                  borderLeft: '3px solid var(--cyan)',
-                  borderRadius: '2px',
-                  padding: '2rem',
-                  backdropFilter: 'blur(14px)',
+                  width: "100%",
+                  minHeight: "450px",
+                  padding: "22px 24px 24px 24px",
+                  background: "linear-gradient(180deg, rgba(15,28,105,0.96) 0%, rgba(8,16,68,0.97) 100%)", 
+                  clipPath: "polygon(0 0, 100% 0, calc(100% - 18px) 100%, 0 100%)",
+                  boxShadow: "inset 0 0 0 1px rgba(133,244,255,0.16), 16px 16px 0 rgba(0,6,30,0.55)",
                 }}
               >
-                {/* Rank indicator */}
-                <div>
-                  <p className="font-orbitron text-[10px] tracking-[5px] text-p3-dim uppercase mb-2">
-                    Proficiency Rank
-                  </p>
-                  <div className="flex gap-[4px]">
-                    {Array.from({ length: SKILLS[activeIdx].max }).map((_, i) => (
-                      <div
-                        key={i}
-                        className="h-[8px] flex-1"
-                        style={{
-                          background: i < SKILLS[activeIdx].rank ? 'var(--cyan)' : 'rgba(0,191,255,0.1)',
-                          boxShadow: i < SKILLS[activeIdx].rank ? '0 0 8px rgba(0,191,255,0.7)' : 'none',
-                        }}
-                      />
-                    ))}
-                  </div>
-                  <p className="font-orbitron text-[11px] tracking-[2px] text-p3-cyan mt-1">
-                    {SKILLS[activeIdx].rank} / {SKILLS[activeIdx].max}
-                  </p>
+                {/* TOP BAR */}
+                <div style={{
+                  display: "grid", gridTemplateColumns: "70px 1fr auto",
+                  alignItems: "center", gap: 14, minHeight: 92, padding: "0 18px",
+                  background: "linear-gradient(90deg, #8ef5ff 0%, #d3fdff 100%)",
+                  clipPath: "polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%)",
+                  color: "#08153f", boxShadow: "10px 0 0 rgba(255,94,136,0.88)",
+                }}>
+                  <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 46, lineHeight: 1 }}>0{activeIdx + 1}</div>
+                  <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 42, lineHeight: 0.92, letterSpacing: 1 }}>SKILL DETAIL</div>
+                  <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 42, letterSpacing: 2 }}>{SKILLS[activeIdx].rank}/{SKILLS[activeIdx].max}</div>
                 </div>
 
-                {/* Deskripsi */}
-                <div>
-                  <p className="font-orbitron text-[10px] tracking-[4px] text-p3-dim uppercase mb-2">
-                    Description
-                  </p>
-                  <p className="font-rajdhani text-[16px] text-white/80 leading-relaxed">
+                {/* BOTTOM DESC BOX */}
+                <div style={{ marginTop: 22, padding: 18, background: "rgba(5,13,57,0.97)", clipPath: "polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%)" }}>
+                  <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 30, letterSpacing: 2, color: "#91f5ff", marginBottom: 14 }}>DESCRIPTION</div>
+                  <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 24, lineHeight: 1.3, color: "#edfaff", marginBottom: 8 }}>
                     {SKILLS[activeIdx].desc}
-                  </p>
+                  </div>
                 </div>
+
+                {/* VISUAL METER */}
+                <div className="flex gap-[4px] mt-6" style={{ padding: "0 18px" }}>
+                  {Array.from({ length: SKILLS[activeIdx].max }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="h-[14px] flex-1"
+                      style={{
+                        background: i < SKILLS[activeIdx].rank ? '#8ef5ff' : 'rgba(142, 245, 255, 0.1)',
+                        clipPath: "polygon(0 0, 100% 0, calc(100% - 4px) 100%, 0 100%)"
+                      }}
+                    />
+                  ))}
+                </div>
+
               </motion.div>
             </AnimatePresence>
           </div>

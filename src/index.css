@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Montserrat:wght@400;600;700;800&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,35 +6,12 @@
 
 :root {
   /* ── BACKGROUNDS ─────────────────────────── */
-  --bg-base:        #030810;
-  --bg-layer:       #060d1f;
-  --bg-card:        rgba(6, 13, 31, 0.82);
-
-  /* ── CYAN — signature P3 Reload ──────────── */
-  --cyan:           #00BFFF;
-  --cyan-hover:     #33CFFF;
-  --cyan-dim:       rgba(0, 191, 255, 0.45);
-  --cyan-ghost:     rgba(0, 191, 255, 0.06);
-  --cyan-glow-sm:   0 0 10px rgba(0,191,255,0.7), 0 0 25px rgba(0,191,255,0.35);
-  --cyan-glow-lg:   0 0 20px rgba(0,191,255,1),   0 0 60px rgba(0,191,255,0.5), 0 0 100px rgba(0,191,255,0.2);
+  --bg-base:        #323539;
+  --bg-layer:       #010eb3;
 
   /* ── TEXT ────────────────────────────────── */
-  --text-primary:   #FFFFFF;
-  --text-dim:       rgba(255, 255, 255, 0.65);
-  --text-ghost:     rgba(255, 255, 255, 0.025);
-
-  /* ── STRIPES ─────────────────────────────── */
-  --stripe-thick:   4px;
-  --stripe-thin:    1px;
-  --stripe-color:   #00BFFF;
-  --stripe-dim:     rgba(0, 191, 255, 0.15);
-
-  /* ── BORDERS ─────────────────────────────── */
-  --border-subtle:  rgba(0, 191, 255, 0.2);
-  --border-active:  rgba(0, 191, 255, 0.55);
-
-  /* ── SCANLINE ────────────────────────────── */
-  --scanline:       rgba(0, 0, 0, 0.055);
+  --text-primary:   #fefefe;
+  --text-dim:       rgba(254, 254, 254, 0.65);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }

@@ -22,7 +22,7 @@ export function S1_Welcome() {
             className="inline-block mb-2"
             style={{ clipPath: 'polygon(0 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 0 100%)' }}
           >
-            <span className="block px-4 pr-7 py-[5px] bg-p3-cyan font-orbitron font-black text-[10px] tracking-[5px] uppercase text-p3-black">
+            <span className="block px-4 pr-7 py-[5px] bg-p3r-cyan-1 font-orbitron font-black text-[10px] tracking-[5px] uppercase text-p3r-dark-grey">
               // PORTFOLIO 2026
             </span>
           </div>
@@ -31,15 +31,7 @@ export function S1_Welcome() {
         {/* Judul */}
         <motion.h1
           variants={fadeSlideUp}
-          className="font-bebas text-[clamp(56px,9vw,130px)] tracking-[4px] leading-none text-white text-center"
-          style={{
-            textShadow: `
-              0 0 10px rgba(0,191,255,0.9),
-              0 0 30px rgba(0,191,255,0.6),
-              0 0 70px rgba(0,191,255,0.3),
-              0 0 130px rgba(0,191,255,0.15)
-            `
-          }}
+          className="font-bebas text-[clamp(56px,9vw,130px)] tracking-[4px] leading-none text-p3r-light text-center"
         >
           HI!!! SELAMAT<br />DATANG
         </motion.h1>
@@ -47,7 +39,7 @@ export function S1_Welcome() {
         {/* Sub-teks */}
         <motion.p
           variants={fadeSlideUp}
-          className="font-orbitron text-[11px] tracking-[6px] text-p3-dim uppercase"
+          className="font-orbitron text-[11px] tracking-[6px] text-p3r-cyan-1/70 uppercase"
         >
           // SCROLL TO EXPLORE
         </motion.p>
@@ -57,10 +49,10 @@ export function S1_Welcome() {
           variants={fadeSlideUp}
           className="flex flex-col items-center gap-1 mt-2"
         >
-          <span className="font-rajdhani text-[16px] text-white/60 tracking-[2px]">
+          <span className="font-rajdhani text-[16px] text-p3r-light/80 tracking-[2px]">
             Ida Bagus Gede Widiastana Bawaskara
           </span>
-          <span className="font-orbitron text-[10px] tracking-[4px] text-p3-dim uppercase">
+          <span className="font-orbitron text-[10px] tracking-[4px] text-p3r-cyan-1/70 uppercase">
             Data Science & Web Development
           </span>
         </motion.div>
@@ -73,8 +65,8 @@ export function S1_Welcome() {
         animate={{ opacity: [0, 1, 0] }}
         transition={{ delay: 2, duration: 2, repeat: Infinity }}
       >
-        <span className="font-orbitron text-[9px] tracking-[4px] text-white/30 uppercase">Scroll</span>
-        <div className="w-px h-8 bg-gradient-to-b from-p3-cyan to-transparent" />
+        <span className="font-orbitron text-[9px] tracking-[4px] text-p3r-light/30 uppercase">Scroll</span>
+        <div className="w-px h-8 bg-gradient-to-b from-p3r-cyan-1 to-transparent" />
       </motion.div>
     </section>
   )

@@ -52,9 +52,9 @@ export function S4_Projects() {
           <GhostText text="JOURNEY" className="bottom-[-2vh] right-[-1vw]" />
 
           {/* Header */}
-          <div className="absolute top-12 left-12 z-10">
+          <div className="absolute top-12 left-12 z-10 flex flex-col">
             <SlashLabel text="// SECTION 04" />
-            <h2 className="font-bebas text-[clamp(36px,4.5vw,64px)] tracking-[3px] text-white leading-none">
+            <h2 className="font-anton text-[72px] leading-[0.9] text-[#f6fbff] tracking-[2px] mb-2">
               PROJECTS
             </h2>
           </div>
@@ -70,7 +70,7 @@ export function S4_Projects() {
               gap: '4vw',
             }}
           >
-            {PROJECTS.map((project) => (
+            {PROJECTS.map((project, i) => (
               <motion.div
                 key={project.title}
                 className="shrink-0 w-[28vw] cursor-pointer"
@@ -79,49 +79,54 @@ export function S4_Projects() {
                 onClick={() => setSelected(project)}
                 style={{
                   height: '55vh',
-                  background: 'var(--bg-card)',
-                  border: '1px solid var(--border-subtle)',
-                  borderLeft: '3px solid var(--cyan)',
-                  borderRadius: '2px',
-                  backdropFilter: 'blur(14px)',
-                  padding: '2rem',
+                  background: 'linear-gradient(180deg, rgba(15,28,105,0.96) 0%, rgba(8,16,68,0.97) 100%)',
+                  clipPath: 'polygon(0 0, 100% 0, calc(100% - 18px) 100%, 0 100%)',
+                  boxShadow: 'inset 0 0 0 1px rgba(133,244,255,0.16), 16px 16px 0 rgba(0,6,30,0.55)',
+                  padding: '0',
                   display: 'flex',
                   flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  boxShadow: 'inset 0 0 30px rgba(0,191,255,0.03)',
                 }}
               >
-                <div>
-                  <p className="font-orbitron text-[10px] tracking-[5px] text-p3-dim uppercase mb-3">
-                    ── Project
-                  </p>
-                  <h3 className="font-bebas text-[clamp(28px,2.8vw,48px)] tracking-[2px] text-white leading-tight mb-4">
-                    {project.title}
-                  </h3>
-                  <p className="font-rajdhani text-[14px] text-white/65 leading-relaxed">
-                    {project.description}
-                  </p>
+                {/* TOP BAR */}
+                <div style={{
+                  display: "flex", alignItems: "center", gap: 14, minHeight: 64, padding: "0 18px",
+                  background: "linear-gradient(90deg, #8ef5ff 0%, #d3fdff 100%)",
+                  clipPath: "polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%)",
+                  color: "#08153f", boxShadow: "10px 0 0 rgba(255,94,136,0.88)",
+                }}>
+                  <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 32, lineHeight: 1 }}>0{i+1}</div>
+                  <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 32, lineHeight: 0.92, letterSpacing: 1 }}>{project.title.toUpperCase()}</div>
                 </div>
-                <div>
-                  <div className="flex flex-wrap gap-2 mb-3">
-                    {project.techStack.map(tech => (
-                      <span
-                        key={tech}
-                        className="font-orbitron text-[9px] tracking-[3px] uppercase px-3 py-1"
-                        style={{
-                          border: '1px solid var(--border-subtle)',
-                          color: 'var(--cyan)',
-                          background: 'var(--cyan-ghost)',
-                          borderRadius: '1px',
-                        }}
-                      >
-                        {tech}
-                      </span>
-                    ))}
+
+                {/* CONTENT */}
+                <div className="flex-1 p-8 flex flex-col justify-between">
+                  <div>
+                    <p className="font-bebas text-[22px] tracking-[1px] text-[#94f4ff] mb-2">
+                      -- PROJECT DESCRIPTION
+                    </p>
+                    <p className="font-montserrat text-[15px] font-medium text-[#f2fcff] leading-relaxed">
+                      {project.description}
+                    </p>
                   </div>
-                  <p className="font-orbitron text-[10px] tracking-[3px] text-p3-dim uppercase">
-                    ↵ Press to expand
-                  </p>
+                  <div>
+                    <div className="flex flex-wrap gap-2 mb-4 mt-6">
+                      {project.techStack.map(tech => (
+                        <span
+                          key={tech}
+                          className="font-bebas text-[18px] px-3 py-1 text-[#06133b]"
+                          style={{
+                            background: '#8df6ff',
+                            clipPath: 'polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%)',
+                          }}
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                    <p className="font-orbitron text-[10px] tracking-[3px] text-[#8ef5ff]/70 uppercase">
+                      ↵ Press to expand
+                    </p>
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -147,53 +152,59 @@ export function S4_Projects() {
                 variants={modalContent}
                 initial="initial" animate="animate" exit="exit"
                 style={{
-                  background: 'var(--bg-layer)',
-                  border: '1px solid var(--border-active)',
-                  borderLeft: '4px solid var(--cyan)',
-                  borderRadius: '2px',
-                  padding: '2.5rem',
-                  boxShadow: '0 0 40px rgba(0,191,255,0.2)',
+                  background: 'linear-gradient(180deg, rgba(15,28,105,0.96) 0%, rgba(8,16,68,0.97) 100%)',
+                  clipPath: 'polygon(0 0, 100% 0, calc(100% - 18px) 100%, 0 100%)',
+                  boxShadow: 'inset 0 0 0 1px rgba(133,244,255,0.16), 16px 16px 0 rgba(0,6,30,0.55)',
+                  padding: '0',
                 }}
               >
-                <p className="font-orbitron text-[10px] tracking-[5px] text-p3-dim uppercase mb-2">
-                  // PROJECT DETAIL
-                </p>
-                <h3 className="font-bebas text-[clamp(36px,4vw,64px)] tracking-[3px] text-white mb-4 leading-none">
-                  {selected.title}
-                </h3>
-                <p className="font-rajdhani text-[16px] text-white/80 leading-relaxed mb-6">
-                  {selected.description}
-                </p>
-                <div className="flex flex-wrap gap-2 mb-8">
-                  {selected.techStack.map(t => (
-                    <span key={t} className="font-orbitron text-[10px] tracking-[3px] uppercase px-3 py-1"
-                      style={{ border: '1px solid var(--border-subtle)', color: 'var(--cyan)', borderRadius: '1px' }}>
-                      {t}
-                    </span>
-                  ))}
+                {/* TOP BAR */}
+                <div style={{
+                  display: "flex", alignItems: "center", gap: 14, minHeight: 72, padding: "0 18px",
+                  background: "linear-gradient(90deg, #8ef5ff 0%, #d3fdff 100%)",
+                  clipPath: "polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%)",
+                  color: "#08153f", boxShadow: "10px 0 0 rgba(255,94,136,0.88)",
+                }}>
+                  <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 36, lineHeight: 0.92, letterSpacing: 1 }}>{selected.title.toUpperCase()}</div>
                 </div>
-                <div className="flex gap-4">
-                  <a
-                    href={selected.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-orbitron text-[11px] font-black tracking-[4px] uppercase px-6 py-3"
-                    style={{
-                      background: 'var(--cyan)',
-                      color: '#030810',
-                      borderRadius: '1px',
-                      clipPath: 'polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%)',
-                    }}
-                  >
-                    → View on GitHub
-                  </a>
-                  <button
-                    onClick={() => setSelected(null)}
-                    className="font-orbitron text-[11px] tracking-[4px] uppercase px-6 py-3 text-white/50 border border-white/20"
-                    style={{ borderRadius: '1px' }}
-                  >
-                    ✕ Close
-                  </button>
+
+                {/* CONTENT */}
+                <div className="p-8">
+                  <p className="font-bebas text-[24px] tracking-[1px] text-[#94f4ff] mb-2">
+                    // PROJECT DETAIL
+                  </p>
+                  <p className="font-montserrat font-medium text-[16px] text-[#f2fcff] leading-relaxed mb-6">
+                    {selected.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2 mb-8">
+                    {selected.techStack.map(t => (
+                      <span key={t} className="font-bebas text-[18px] px-3 py-1 text-[#06133b]"
+                        style={{ background: '#8df6ff', clipPath: 'polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%)' }}>
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex gap-4">
+                    <a
+                      href={selected.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-anton text-[20px] px-6 py-2"
+                      style={{
+                        background: '#8ef5ff',
+                        color: '#08153f',
+                        clipPath: 'polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%)',
+                      }}
+                    >
+                      VIEW ON GITHUB
+                    </a>
+                    <button
+                      onClick={() => setSelected(null)}
+                      className="font-anton text-[20px] px-6 py-2 text-[#f2fcff]/60 border border-[#f2fcff]/20"
+                    >
+                      CLOSE
+                    </button>
+                  </div>
                 </div>
               </motion.div>
             </motion.div>
