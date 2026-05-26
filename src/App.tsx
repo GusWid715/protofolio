@@ -21,12 +21,22 @@ export default function App() {
       <KeyboardHint />
 
       {/* ── Page Content ─────────────────────── */}
-      <main>
-        <S1_Welcome />
-        <S2_About />
-        <S3_Skills />
-        <S4_Projects />
-        <S5_Contact />
+      <main className="w-full">
+        <div className="snap-start shrink-0">
+          <S1_Welcome />
+        </div>
+        <div className="snap-start shrink-0">
+          <S2_About />
+        </div>
+        <div className="snap-start shrink-0">
+          <S3_Skills />
+        </div>
+        <div className="snap-start shrink-0">
+          <S4_Projects />
+        </div>
+        <div className="snap-start shrink-0">
+          <S5_Contact />
+        </div>
       </main>
     </>
   )

@@ -3,11 +3,11 @@ import { useState, useEffect } from 'react'
 
 const PHASES = [
   // [scrollStart, scrollEnd, imgSrc, position config]
-  { start: 0,    end: 0.15, img: '/images/char_welcome.png',  bottom: '0%', right: 'auto', left: '50%', transform: 'translateX(-50%)', scale: 1.0,  height: '80vh' },
-  { start: 0.15, end: 0.35, img: '/images/char_about.png',    bottom: '0',  right: '2%',   left: 'auto', transform: 'none',           scale: 0.82, height: '85vh' },
-  { start: 0.35, end: 0.55, img: '/images/char_skills.png',   bottom: '0',  right: 'auto', left: '2%',  transform: 'none',             scale: 0.82, height: '85vh' },
-  { start: 0.55, end: 0.78, img: '/images/char_projects.png', bottom: '0',  right: '3%',   left: 'auto', transform: 'none',           scale: 0.80, height: '85vh' },
-  { start: 0.78, end: 1.0,  img: '/images/char_footer.png',   bottom: '0',  right: 'auto', left: '50%', transform: 'translateX(-50%)', scale: 1.1,  height: '80vh' },
+  { start: 0,     end: 0.125, img: '/images/char_welcome.png',  bottom: '0%', right: 'auto', left: '50%', x: '-50%', scale: 1.0,  height: '80vh' },
+  { start: 0.125, end: 0.375, img: '/images/char_about.png',    bottom: '0',  right: '2%',   left: 'auto', x: '0%',    scale: 0.82, height: '85vh' },
+  { start: 0.375, end: 0.625, img: '/images/char_skills.png',   bottom: '0',  right: 'auto', left: '2%',  x: '0%',    scale: 0.82, height: '85vh' },
+  { start: 0.625, end: 0.875, img: '/images/char_projects.png', bottom: '0',  right: '3%',   left: 'auto', x: '0%',    scale: 0.80, height: '85vh' },
+  { start: 0.875, end: 1.0,   img: '/images/char_footer.png',   bottom: '0',  right: 'auto', left: '50%', x: '-50%', scale: 1.1,  height: '80vh' },
 ]
 
 export function StickyCharacter() {
@@ -36,22 +36,23 @@ export function StickyCharacter() {
           key={phase.img}
           src={phase.img}
           alt="character"
-          initial={{ opacity: 0, scale: phase.scale * 0.95 }}
+          initial={{ opacity: 0, scale: phase.scale * 0.95, x: phase.x }}
           animate={{
             opacity: 1,
             scale: phase.scale,
+            x: phase.x
           }}
-          exit={{ opacity: 0, scale: phase.scale * 0.95 }}
+          exit={{ opacity: 0, scale: phase.scale * 0.95, x: phase.x }}
           transition={{
             opacity: { duration: 0.6, ease: 'easeInOut' },
             scale:   { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+            x:       { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
           }}
           style={{
             position: 'absolute',
             bottom:  phase.bottom,
             right:   phase.right,
             left:    phase.left,
-            transform: phase.transform,
             height: phase.height,
             width: 'auto',
             objectFit: 'contain',

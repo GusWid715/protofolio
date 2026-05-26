@@ -11,27 +11,15 @@ export function S1_Welcome() {
       <GhostText text="DARK HOUR" className="bottom-[-2vh] left-[-1vw]" />
 
       <motion.div
-        className="relative z-10 flex flex-col items-center gap-6"
+        className="relative z-10 flex flex-col items-center gap-6 mb-[15vh]"
         variants={staggerContainer}
         initial="hidden"
         animate="visible"
       >
-        {/* Eyebrow label */}
-        <motion.div variants={fadeSlideUp}>
-          <div
-            className="inline-block mb-2"
-            style={{ clipPath: 'polygon(0 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 0 100%)' }}
-          >
-            <span className="block px-4 pr-7 py-[5px] bg-p3r-cyan-1 font-orbitron font-black text-[10px] tracking-[5px] uppercase text-p3r-dark-grey">
-              // PORTFOLIO 2026
-            </span>
-          </div>
-        </motion.div>
-
         {/* Judul */}
         <motion.h1
           variants={fadeSlideUp}
-          className="font-bebas text-[clamp(56px,9vw,130px)] tracking-[4px] leading-none text-p3r-light text-center"
+          className="font-bebas text-[clamp(56px,9vw,130px)] tracking-[4px] leading-none text-[#f6fbff] text-center"
         >
           HI!!! SELAMAT<br />DATANG
         </motion.h1>
@@ -39,23 +27,10 @@ export function S1_Welcome() {
         {/* Sub-teks */}
         <motion.p
           variants={fadeSlideUp}
-          className="font-orbitron text-[11px] tracking-[6px] text-p3r-cyan-1/70 uppercase"
+          className="font-orbitron text-[11px] tracking-[6px] text-[#8ef5ff]/70 uppercase"
         >
           // SCROLL TO EXPLORE
         </motion.p>
-
-        {/* Name tag */}
-        <motion.div
-          variants={fadeSlideUp}
-          className="flex flex-col items-center gap-1 mt-2"
-        >
-          <span className="font-rajdhani text-[16px] text-p3r-light/80 tracking-[2px]">
-            Ida Bagus Gede Widiastana Bawaskara
-          </span>
-          <span className="font-orbitron text-[10px] tracking-[4px] text-p3r-cyan-1/70 uppercase">
-            Data Science & Web Development
-          </span>
-        </motion.div>
       </motion.div>
 
       {/* Scroll indicator */}

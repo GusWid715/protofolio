@@ -11,19 +11,11 @@ const SKILLS = [
 ]
 
 export function S3_Skills() {
-  const wrapperRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({ target: wrapperRef })
   const [activeIdx, setActiveIdx] = useState(0)
 
-  useMotionValueEvent(scrollYProgress, 'change', (v) => {
-    const idx = Math.min(Math.floor(v * SKILLS.length), SKILLS.length - 1)
-    setActiveIdx(idx)
-  })
-
   return (
-    // Wrapper: tinggi 400vh untuk scroll hijacking
-    <div ref={wrapperRef} className="relative h-[400vh]" id="s3-skills">
-      <div className="sticky top-0 h-screen overflow-hidden flex items-center justify-center">
+    <section className="relative h-screen flex items-center justify-center overflow-hidden" id="s3-skills">
+      <div className="relative w-full h-full flex items-center justify-center">
         <GhostText text="ARCANA" className="bottom-[-2vh] left-[-1vw]" />
 
         <div className="relative z-10 w-full max-w-7xl px-8 grid grid-cols-2 gap-12 items-center">
@@ -39,7 +31,8 @@ export function S3_Skills() {
               return (
                 <div
                   key={skill.title}
-                  className="relative cursor-default"
+                  className="relative cursor-pointer"
+                  onMouseEnter={() => setActiveIdx(index)}
                   style={{
                     opacity: 1, // Let framer-motion handle the opacity if wanted, but reference uses solid opacity
                     transform: isActive ? "translateX(6px)" : "translateX(0)",
@@ -159,6 +152,6 @@ export function S3_Skills() {
 
         </div>
       </div>
-    </div>
+    </section>
   )
 }

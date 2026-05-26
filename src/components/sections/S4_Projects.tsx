@@ -38,21 +38,16 @@ const PROJECTS: Project[] = [
 ]
 
 export function S4_Projects() {
-  const wrapperRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({ target: wrapperRef })
   const [selected, setSelected] = useState<Project | null>(null)
-
-  // Map scroll 0→1 ke translateX 0% → -75% (1 card per 25% scroll)
-  const x = useTransform(scrollYProgress, [0, 1], ['0%', '-75%'])
 
   return (
     <>
-      <div ref={wrapperRef} className="relative h-[300vh]" id="s4-projects">
-        <div className="sticky top-0 h-screen overflow-hidden">
+      <section className="relative h-screen" id="s4-projects">
+        <div className="absolute inset-0 overflow-hidden">
           <GhostText text="JOURNEY" className="bottom-[-2vh] right-[-1vw]" />
 
           {/* Header */}
-          <div className="absolute top-12 left-12 z-10 flex flex-col">
+          <div className="absolute top-12 left-12 z-10 flex flex-col pointer-events-none">
             <SlashLabel text="// SECTION 04" />
             <h2 className="font-anton text-[72px] leading-[0.9] text-[#f6fbff] tracking-[2px] mb-2">
               PROJECTS
@@ -60,20 +55,21 @@ export function S4_Projects() {
           </div>
 
           {/* Horizontal track */}
-          <motion.div
-            className="absolute top-0 left-0 h-full flex flex-row flex-nowrap items-center"
+          <div
+            className="absolute top-0 left-0 w-full h-full flex flex-row flex-nowrap items-center overflow-x-auto snap-x snap-mandatory scroll-smooth"
             style={{
-              x,
-              width: `${PROJECTS.length * 100}vw`,
               paddingTop: '100px',
               paddingLeft: '12vw',
+              paddingRight: '12vw',
               gap: '4vw',
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
             }}
           >
             {PROJECTS.map((project, i) => (
               <motion.div
                 key={project.title}
-                className="shrink-0 w-[28vw] cursor-pointer"
+                className="shrink-0 w-[28vw] cursor-pointer snap-center"
                 whileHover={{ scale: 1.03, y: -6 }}
                 transition={{ duration: 0.3 }}
                 onClick={() => setSelected(project)}
@@ -130,9 +126,9 @@ export function S4_Projects() {
                 </div>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
         </div>
-      </div>
+      </section>
 
       {/* MODAL */}
       <AnimatePresence>
