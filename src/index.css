@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* ── BACKGROUNDS ─────────────────────────── */
+  --bg-base:        #030810;
+  --bg-layer:       #060d1f;
+  --bg-card:        rgba(6, 13, 31, 0.82);
+
+  /* ── CYAN — signature P3 Reload ──────────── */
+  --cyan:           #00BFFF;
+  --cyan-hover:     #33CFFF;
+  --cyan-dim:       rgba(0, 191, 255, 0.45);
+  --cyan-ghost:     rgba(0, 191, 255, 0.06);
+  --cyan-glow-sm:   0 0 10px rgba(0,191,255,0.7), 0 0 25px rgba(0,191,255,0.35);
+  --cyan-glow-lg:   0 0 20px rgba(0,191,255,1),   0 0 60px rgba(0,191,255,0.5), 0 0 100px rgba(0,191,255,0.2);
+
+  /* ── TEXT ────────────────────────────────── */
+  --text-primary:   #FFFFFF;
+  --text-dim:       rgba(255, 255, 255, 0.65);
+  --text-ghost:     rgba(255, 255, 255, 0.025);
+
+  /* ── STRIPES ─────────────────────────────── */
+  --stripe-thick:   4px;
+  --stripe-thin:    1px;
+  --stripe-color:   #00BFFF;
+  --stripe-dim:     rgba(0, 191, 255, 0.15);
+
+  /* ── BORDERS ─────────────────────────────── */
+  --border-subtle:  rgba(0, 191, 255, 0.2);
+  --border-active:  rgba(0, 191, 255, 0.55);
+
+  /* ── SCANLINE ────────────────────────────── */
+  --scanline:       rgba(0, 0, 0, 0.055);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  background: var(--bg-base);
+  color: var(--text-primary);
+}
+
+body {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  overflow-x: hidden;
+}
+
+/* Utility */
+.font-bebas    { font-family: 'Bebas Neue', sans-serif; }
+.font-orbitron { font-family: 'Orbitron', monospace; }
+.font-rajdhani { font-family: 'Rajdhani', sans-serif; }
