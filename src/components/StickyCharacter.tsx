@@ -28,7 +28,7 @@ export function StickyCharacter() {
 
   return (
     <div
-      className="fixed inset-0 pointer-events-none z-40"
+      className="fixed inset-0 pointer-events-none z-0"
       style={{ overflow: 'hidden' }}
     >
       <AnimatePresence mode="sync">
