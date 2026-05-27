@@ -10,13 +10,14 @@ export function S1_Welcome() {
       {/* ── WELCOME ghost text — full section size ── */}
       {/* Ukuran font bisa diubah di fontSize di bawah ini */}
       <span
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 select-none pointer-events-none font-bebas leading-none"
+        className="absolute bottom-0 left-1/2 select-none pointer-events-none font-bebas leading-none"
         style={{
           fontSize: 'clamp(100px, 24vw, 800px)',
           color: 'rgba(246,251,255,0.04)',
           letterSpacing: '0px',
           whiteSpace: 'nowrap',
           zIndex: 0,
+          transform: 'translateX(-50%) translateY(20%)',
         }}
       >
         WELCOME
