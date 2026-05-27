@@ -8,10 +8,10 @@ const STATS = [
 ]
 
 const DATA = [
-  { id: 'NAMA', value: 'Ida Bagus Gede Widiastana B.' },
-  { id: 'PERAN', value: 'Data Science & Web Dev' },
-  { id: 'LOKASI', value: 'Indonesia' },
-  { id: 'STATUS', value: 'ACTIVE' },
+  { id: 'NAMA', value: 'Ida Bagus Gede Widiastana Bawaskara' },
+  { id: 'PERAN', value: 'Mahasiswa' },
+  { id: 'LOKASI', value: 'Bali, Indonesia' },
+  { id: 'STATUS', value: 'Active' },
   { id: 'TECH', value: 'Python, ML, PHP, Laravel' },
 ]
 
@@ -69,6 +69,17 @@ export function S2_About() {
 
       {/* ── LEFT — Panels (vertically centered) ─── */}
       <div className="relative z-10 flex flex-col justify-center gap-4 px-8 md:px-14 w-[48%] shrink-0">
+
+        {/* ── Section title — selaras gaya S3 SKILLS ── */}
+        <motion.div
+          variants={slideIn}
+          initial="hidden"
+          animate={inView ? 'visible' : 'hidden'}
+          className="font-anton leading-[0.9] text-[#f6fbff] tracking-[2px] ml-3"
+          style={{ fontSize: 'clamp(44px, 5.5vw, 72px)' }}
+        >
+          ABOUT ME
+        </motion.div>
 
         {/* ── SOCIAL STATS BOX ──────────────────── */}
         <motion.div
