@@ -3,41 +3,41 @@ import { useRef } from 'react'
 import { GhostText } from '@/components/shared'
 
 const STATS = [
-  { id: 'I',   label: 'ACADEMICS', level: 'Above Average', value: 3, max: 5 },
-  { id: 'II',  label: 'CHARM',     level: 'Unpolished',    value: 2, max: 5 },
-  { id: 'III', label: 'COURAGE',   level: 'Tough',         value: 4, max: 5 },
+  { id: 'I', label: 'ACADEMICS', level: 'Above Average', value: 3, max: 5 },
+  { id: 'II', label: 'CHARM', level: 'Unpolished', value: 2, max: 5 },
+  { id: 'III', label: 'COURAGE', level: 'Tough', value: 4, max: 5 },
 ]
 
 const DATA = [
-  { id: 'NAMA',   value: 'Ida Bagus Gede Widiastana B.' },
-  { id: 'PERAN',  value: 'Data Science & Web Dev' },
+  { id: 'NAMA', value: 'Ida Bagus Gede Widiastana B.' },
+  { id: 'PERAN', value: 'Data Science & Web Dev' },
   { id: 'LOKASI', value: 'Indonesia' },
   { id: 'STATUS', value: 'ACTIVE' },
-  { id: 'TECH',   value: 'Python, ML, PHP, Laravel' },
+  { id: 'TECH', value: 'Python, ML, PHP, Laravel' },
 ]
 
 const slideIn: Variants = {
-  hidden:  { opacity: 0, x: -50 },
+  hidden: { opacity: 0, x: -50 },
   visible: { opacity: 1, x: 0, transition: { type: 'spring', stiffness: 45, damping: 14 } },
 }
 
 const stagger: Variants = {
-  hidden:  {},
+  hidden: {},
   visible: { transition: { staggerChildren: 0.07, delayChildren: 0.2 } },
 }
 
 const rowIn: Variants = {
-  hidden:  { opacity: 0, x: -20 },
+  hidden: { opacity: 0, x: -20 },
   visible: { opacity: 1, x: 0, transition: { type: 'spring', stiffness: 60 } },
 }
 
 const titleIn: Variants = {
-  hidden:  { opacity: 0, y: -30 },
+  hidden: { opacity: 0, y: -30 },
   visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 40, damping: 14, delay: 0.1 } },
 }
 
 export function S2_About() {
-  const ref    = useRef(null)
+  const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-15%' })
 
   return (
@@ -194,16 +194,15 @@ export function S2_About() {
             fontSize: 11, letterSpacing: 5, color: '#8ef5ff', opacity: 0.7,
             marginBottom: 4,
           }}>
-            // PROFILE
           </div>
           <h2 style={{
             fontFamily: "'Anton', sans-serif",
-            fontSize: 'clamp(52px, 6vw, 86px)',
+            fontSize: 'clamp(92px, 12vw, 96px)',
             lineHeight: 0.9,
             color: '#f6fbff',
             letterSpacing: 2,
           }}>
-            ABOUT<br />ME
+            ABOUT ME
           </h2>
         </motion.div>
       </div>
