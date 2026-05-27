@@ -20,7 +20,7 @@ export function S1_Welcome() {
           transform: 'translateX(-50%) translateY(20%)',
         }}
       >
-        WELCOME
+        W E L C O M E
       </span>
 
       {/* ── Judul atas — di belakang karakter (z-0 < StickyCharacter z-[1]) ── */}
