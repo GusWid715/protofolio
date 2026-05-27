@@ -1,6 +1,5 @@
 import { motion, useInView, type Variants } from 'framer-motion'
 import { useRef } from 'react'
-import { GhostText } from '@/components/shared'
 
 const STATS = [
   { id: 'I', label: 'ACADEMICS', level: 'Above Average', value: 3, max: 5 },
@@ -46,7 +45,27 @@ export function S2_About() {
       id="s2-about"
       className="relative h-screen flex overflow-hidden"
     >
-      <GhostText text="STATUS" className="bottom-[-2vh] left-[-1vw]" />
+      {/* ── Giant title watermark — behind character (z-0 < StickyCharacter z-1) ── */}
+      <motion.div
+        variants={titleIn}
+        initial="hidden"
+        animate={inView ? 'visible' : 'hidden'}
+        className="absolute pointer-events-none select-none"
+        style={{
+          bottom: '-2vh',
+          right: '-1vw',
+          zIndex: 0,
+          fontFamily: "'Anton', sans-serif",
+          fontSize: 'clamp(120px, 18vw, 240px)',
+          lineHeight: 0.85,
+          letterSpacing: 2,
+          color: 'rgba(246,251,255,0.055)',
+          textAlign: 'right',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        ABOUT ME
+      </motion.div>
 
       {/* ── LEFT — Panels (vertically centered) ─── */}
       <div className="relative z-10 flex flex-col justify-center gap-4 px-8 md:px-14 w-[48%] shrink-0">
@@ -175,36 +194,6 @@ export function S2_About() {
           </motion.div>
         </motion.div>
 
-      </div>
-
-      {/* ── RIGHT — Title above character area ──── */}
-      <div className="relative z-10 flex-1 flex flex-col justify-start pt-[10vh] px-6 pointer-events-none">
-        <motion.div
-          variants={titleIn}
-          initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
-        >
-          {/* Accent line */}
-          <div style={{
-            width: 48, height: 3, marginBottom: 8,
-            background: 'linear-gradient(90deg, #8ef5ff, transparent)',
-          }} />
-          <div style={{
-            fontFamily: "'Bebas Neue', sans-serif",
-            fontSize: 11, letterSpacing: 5, color: '#8ef5ff', opacity: 0.7,
-            marginBottom: 4,
-          }}>
-          </div>
-          <h2 style={{
-            fontFamily: "'Anton', sans-serif",
-            fontSize: 'clamp(92px, 12vw, 96px)',
-            lineHeight: 0.9,
-            color: '#f6fbff',
-            letterSpacing: 2,
-          }}>
-            ABOUT ME
-          </h2>
-        </motion.div>
       </div>
 
     </section>

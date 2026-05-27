@@ -8,10 +8,10 @@ export function S1_Welcome() {
       id="s1-welcome"
       className="relative h-screen flex flex-col items-center justify-center overflow-hidden"
     >
-      <GhostText text="DARK HOUR" className="bottom-[-2vh] left-[-1vw]" />
+      <GhostText text="WELCOME" className="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
 
       <motion.div
-        className="absolute top-[10vh] z-10 flex flex-col items-center gap-6"
+        className="z-10 flex flex-col items-center gap-6"
         variants={staggerContainer}
         initial="hidden"
         animate="visible"
@@ -19,7 +19,8 @@ export function S1_Welcome() {
         {/* Judul */}
         <motion.h1
           variants={fadeSlideUp}
-          className="font-bebas text-[clamp(40px,7vw,100px)] tracking-[4px] leading-none text-[#f6fbff] text-center whitespace-nowrap"
+          className="font-bebas tracking-[6px] leading-none text-[#f6fbff] text-center"
+          style={{ fontSize: 'clamp(60px, 13vw, 200px)' }}
         >
           HI!!! SELAMAT DATANG
         </motion.h1>
