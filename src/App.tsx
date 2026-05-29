@@ -26,8 +26,7 @@ export default function App() {
         <div className="snap-start shrink-0">
           <S2_About />
         </div>
-        {/* S3 wraps a 400vh tall sticky-scroll section — no shrink-0 */}
-        <div className="snap-start">
+        <div className="snap-start shrink-0">
           <S3_Skills />
         </div>
         <div className="snap-start shrink-0">
