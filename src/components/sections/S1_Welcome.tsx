@@ -39,11 +39,6 @@ export function S1_Welcome() {
           style={{
             fontSize: 'clamp(60px, 13vw, 200px)',
             letterSpacing: '6px',
-            textShadow: `
-              0 0 10px rgba(0,191,255,0.9),
-              0 0 30px rgba(0,191,255,0.5),
-              0 0 80px rgba(0,191,255,0.2)
-            `,
           }}
         >
           HI!!! SELAMAT DATANG
@@ -53,7 +48,6 @@ export function S1_Welcome() {
           className="absolute bottom-[-42px] font-orbitron text-[10px] tracking-[6px] uppercase"
           style={{ color: 'rgba(0,191,255,0.5)' }}
         >
-          // SCROLL TO EXPLORE
         </motion.p>
       </motion.div>
 
