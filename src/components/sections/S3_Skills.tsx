@@ -72,11 +72,11 @@ export function S3_Skills() {
     >
       <GhostText text="ARCANA" className="bottom-[-2vh] left-[-1vw]" />
 
-      <div className="relative z-10 w-full max-w-7xl px-8 grid grid-cols-2 gap-12 items-center">
+      <div className="relative z-10 w-full px-8 md:px-14 grid grid-cols-2 gap-8 items-center">
 
         {/* ── LEFT — Skill list ─────────────────────────── */}
         <div className="flex flex-col gap-3">
-          <div className="font-anton text-[72px] leading-[0.9] text-[#f6fbff] tracking-[2px] mb-2 ml-3">
+          <div className="font-anton text-[clamp(44px,5.5vw,72px)] leading-[0.9] text-[#f6fbff] tracking-[2px] mb-2 ml-3">
             SKILLS
           </div>
 
@@ -129,12 +129,12 @@ export function S3_Skills() {
                       display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', zIndex: 1,
                     }}
                   >
-                    <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 48, lineHeight: 0.9, letterSpacing: 1, color: isActive ? '#000' : '#a5f6ff', transition: 'color 0.22s ease', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '70%' }}>
+                    <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 34, lineHeight: 0.9, letterSpacing: 1, color: isActive ? '#000' : '#a5f6ff', transition: 'color 0.22s ease', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', flex: 1, minWidth: 0 }}>
                       {skill.title}
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 2, flexShrink: 0 }}>
-                      <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 24, letterSpacing: 2, color: isActive ? '#000' : '#9ffbff', transition: 'color 0.22s ease' }}>RANK</div>
-                      <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 56, lineHeight: 0.82, color: isActive ? '#000' : '#9ffbff', transition: 'color 0.22s ease' }}>{skill.rank}</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 2, flexShrink: 0 }}>
+                      <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 2, color: isActive ? '#000' : '#9ffbff', transition: 'color 0.22s ease' }}>RANK</div>
+                      <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 44, lineHeight: 0.82, color: isActive ? '#000' : '#9ffbff', transition: 'color 0.22s ease' }}>{skill.rank}</div>
                     </div>
                   </div>
 

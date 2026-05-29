@@ -1,152 +1,127 @@
 /**
  * GlobalCharacterOverlay
  * ─────────────────────────────────────────────────────────────────────────────
- * Fixed layer (z-50, pointer-events-none) — 5 stacked images that crossfade
- * based on scroll progress.  Each image is individually positioned so we
- * never rely on a zero-width wrapper container.
+ * Fixed layer (z-[2], pointer-events-none).
  *
- * Scroll anchors  →  section:
- *   0.00  Welcome   (center screen)
- *   0.25  About Me  (bottom-right)
- *   0.50  Projects  (bottom-right, nudged left)
- *   0.75  Skills    (bottom-left)
- *   1.00  Footer    (center screen)
+ * Uses the proven AnimatePresence approach (same as the original StickyCharacter)
+ * instead of stacked-image opacity MotionValues, which had bleeding issues in
+ * Framer Motion v12.
+ *
+ * Phase → Section mapping (scroll thresholds = midpoints between KEYS):
+ *   0   (0.00–0.125)  S1 Welcome   → char_welcome.png   center
+ *   1   (0.125–0.375) S2 About Me  → char_about.png     right
+ *   2   (0.375–0.625) S3 Skills    → char_skills.png    right-nudged
+ *   3   (0.625–0.875) S4 Projects  → char_projects.png  left
+ *   4   (0.875–1.00)  S5 Contact   → char_footer.png    center
  */
 
-import { useScroll, useTransform, useSpring, motion } from 'framer-motion'
+import { useScroll, motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect } from 'react'
 
-// ─── Phase data ───────────────────────────────────────────────────────────────
+// ─── Phase definitions ────────────────────────────────────────────────────────
 
 const PHASES = [
   {
-    src:     '/images/char_welcome.png',
-    // Position mirrors the old StickyCharacter approach (CSS left/right/bottom)
-    bottom:  '0px',
-    left:    '50%',
-    right:   'auto',
-    // Framer Motion x applied as transform (% relative to *image* width → works!)
-    x:       '-50%',
-    height:  '82vh',
-    scale:   1.0,
+    img:   '/images/char_welcome.png',
+    // Center screen — translate -50% relative to image own width
+    bottom: '0', left: '50%', right: 'auto',
+    x: '-50%',
+    scale:  1.0,
+    height: '82vh',
   },
   {
-    src:     '/images/char_about.png',
-    bottom:  '0px',
-    left:    'auto',
-    right:   '0px',
-    x:       '0%',
-    height:  '88vh',
-    scale:   0.85,
+    img:   '/images/char_about.png',
+    // Bottom-right
+    bottom: '0', left: 'auto', right: '0px',
+    x: '0%',
+    scale:  0.85,
+    height: '88vh',
   },
   {
-    src:     '/images/char_projects.png',
-    bottom:  '0px',
-    left:    'auto',
-    right:   '3vw',
-    x:       '0%',
-    height:  '85vh',
-    scale:   0.85,
+    img:   '/images/char_skills.png',
+    // Bottom-right, nudged slightly inward so it doesn't clip
+    bottom: '0', left: 'auto', right: '3vw',
+    x: '0%',
+    scale:  0.85,
+    height: '85vh',
   },
   {
-    src:     '/images/char_skills.png',
-    bottom:  '0px',
-    left:    '0px',
-    right:   'auto',
-    x:       '0%',
-    height:  '85vh',
-    scale:   0.90,
+    img:   '/images/char_projects.png',
+    // Bottom-left
+    bottom: '0', left: '0px', right: 'auto',
+    x: '0%',
+    scale:  0.90,
+    height: '85vh',
   },
   {
-    src:     '/images/char_footer.png',
-    bottom:  '0px',
-    left:    '50%',
-    right:   'auto',
-    x:       '-50%',
-    height:  '82vh',
-    scale:   1.1,
+    img:   '/images/char_footer.png',
+    // Center screen
+    bottom: '0', left: '50%', right: 'auto',
+    x: '-50%',
+    scale:  1.1,
+    height: '82vh',
   },
 ] as const
 
-// Scroll progress anchors (one per phase)
-const KEYS = [0, 0.25, 0.5, 0.75, 1] as const
-
-// Spring config — smooth glide
-const SPRING = { stiffness: 60, damping: 20, mass: 1.2 } as const
-
-// ─── Crossfade opacity per phase ──────────────────────────────────────────────
-//
-// Each image is fully visible at its anchor and fades over ±FADE on each side.
-// Fade width = 10% of total scroll range.
-
-const FADE = 0.10
-
-function buildOpacityRange(i: number): [number[], number[]] {
-  const k = KEYS[i]
-  const n = KEYS.length
-
-  if (i === 0) {
-    // Phase 0: opaque from 0, fade out towards phase 1
-    return [
-      [0,           KEYS[1] - FADE, KEYS[1]],
-      [1,           1,              0],
-    ]
-  }
-  if (i === n - 1) {
-    // Last phase: fade in from previous, stay opaque to 1
-    return [
-      [KEYS[n - 2], KEYS[n - 2] + FADE, 1],
-      [0,           1,                  1],
-    ]
-  }
-  // Middle phases: bell curve around anchor
-  return [
-    [k - FADE, k, k + FADE],
-    [0,        1, 0],
-  ]
+// Threshold = midpoints between scroll anchors [0, 0.25, 0.5, 0.75, 1]
+function resolvePhase(v: number): number {
+  if (v < 0.125) return 0
+  if (v < 0.375) return 1
+  if (v < 0.625) return 2
+  if (v < 0.875) return 3
+  return 4
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export function GlobalCharacterOverlay() {
   const { scrollYProgress } = useScroll()
+  const [activeIdx, setActiveIdx] = useState(0)
 
-  // Scale springs — one per phase (springed individually isn't ideal for crossfade;
-  // instead we animate a single shared scale value between phase anchors)
-  const rawScale = useTransform(
-    scrollYProgress,
-    [...KEYS],
-    PHASES.map(p => p.scale),
-  )
-  const springScale = useSpring(rawScale, SPRING)
+  useEffect(() => {
+    // Listen to scroll changes and update active phase
+    const unsubscribe = scrollYProgress.on('change', (v) => {
+      const next = resolvePhase(v)
+      setActiveIdx(prev => prev !== next ? next : prev)
+    })
+    return unsubscribe
+  }, [scrollYProgress])
 
-  // ── Opacity motion values (5 explicit calls — Rules of Hooks) ──────────────
-  const [ir0, or0] = buildOpacityRange(0)
-  const [ir1, or1] = buildOpacityRange(1)
-  const [ir2, or2] = buildOpacityRange(2)
-  const [ir3, or3] = buildOpacityRange(3)
-  const [ir4, or4] = buildOpacityRange(4)
-
-  const op0 = useTransform(scrollYProgress, ir0, or0)
-  const op1 = useTransform(scrollYProgress, ir1, or1)
-  const op2 = useTransform(scrollYProgress, ir2, or2)
-  const op3 = useTransform(scrollYProgress, ir3, or3)
-  const op4 = useTransform(scrollYProgress, ir4, or4)
-
-  const opacities = [op0, op1, op2, op3, op4]
+  const phase = PHASES[activeIdx]
 
   return (
     <div
-      className="fixed inset-0 pointer-events-none z-[2]"
+      className="fixed inset-0 pointer-events-none z-[2] overflow-hidden"
       aria-hidden="true"
     >
-      {PHASES.map((phase, i) => (
+      <AnimatePresence mode="sync">
         <motion.img
-          key={phase.src}
-          src={phase.src}
-          alt={`character phase ${i + 1}`}
+          key={phase.img}
+          src={phase.img}
+          alt={`character section ${activeIdx + 1}`}
           draggable={false}
+          // ── Enter ──────────────────────────────────────────────────────────
+          initial={{
+            opacity: 0,
+            scale: phase.scale * 0.93,
+            x: phase.x,
+          }}
+          animate={{
+            opacity: 1,
+            scale: phase.scale,
+            x: phase.x,
+          }}
+          // ── Exit ───────────────────────────────────────────────────────────
+          exit={{
+            opacity: 0,
+            scale: phase.scale * 0.93,
+            x: phase.x,
+          }}
+          transition={{
+            opacity: { duration: 0.55, ease: 'easeInOut' },
+            scale:   { duration: 0.75, ease: [0.22, 1, 0.36, 1] },
+          }}
           style={{
-            // ── Layout (same approach as old StickyCharacter) ─────────────
             position: 'absolute',
             bottom:   phase.bottom,
             left:     phase.left,
@@ -154,18 +129,12 @@ export function GlobalCharacterOverlay() {
             height:   phase.height,
             width:    'auto',
             objectFit: 'contain',
-            // ── Framer Motion transforms ──────────────────────────────────
-            x:        phase.x,      // % works relative to image's own width ✓
-            scale:    springScale,  // shared spring-smoothed scale
             transformOrigin: 'bottom center',
-            // ── Crossfade ─────────────────────────────────────────────────
-            opacity: opacities[i],
-            // ── No interaction ────────────────────────────────────────────
             userSelect:    'none',
             pointerEvents: 'none',
           }}
         />
-      ))}
+      </AnimatePresence>
     </div>
   )
 }
