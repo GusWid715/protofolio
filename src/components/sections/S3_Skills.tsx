@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { skillDetailTransition } from '@/animations/variants'
-import { GhostText } from '@/components/shared'
+import { motion, AnimatePresence, useInView } from 'framer-motion'
+import { skillDetailTransition, staggerContainer, slideInLeft, fadeStagger } from '@/animations/variants'
+import { GhostText, SlashLabel } from '@/components/shared'
 
 const SKILLS = [
   { id: 'I',   title: 'Python Programming', subtitle: 'Backend / Automation', rank: 7, max: 10, desc: 'Extensive experience in writing scripts for data scraping, automation, and backend logic.' },
@@ -31,6 +31,10 @@ export function S3_Skills() {
   const activeIdxRef = useRef(0)
   const cooldownRef  = useRef(false)
   const sectionRef   = useRef<HTMLElement>(null)
+
+  // Animasi entrance — trigger saat section masuk viewport
+  const inViewRef = useRef<HTMLDivElement>(null)
+  const inView    = useInView(inViewRef, { once: true, margin: '-10%' })
 
   useEffect(() => {
     const COOLDOWN_MS = 500
@@ -72,19 +76,29 @@ export function S3_Skills() {
     >
       <GhostText text="ARCANA" className="bottom-[-2vh] left-[-1vw]" />
 
-      <div className="relative z-10 w-full px-8 md:px-14 grid grid-cols-2 gap-8 items-center">
+      <div ref={inViewRef} className="relative z-10 w-full px-8 md:px-14 grid grid-cols-2 gap-8 items-center">
 
         {/* ── LEFT — Skill list ─────────────────────────── */}
-        <div className="flex flex-col gap-3">
-          <div className="font-anton text-[clamp(44px,5.5vw,72px)] leading-[0.9] text-[#f6fbff] tracking-[2px] mb-2 ml-3">
-            SKILLS
-          </div>
+        <motion.div
+          className="flex flex-col gap-3"
+          variants={staggerContainer}
+          initial="hidden"
+          animate={inView ? 'visible' : 'hidden'}
+        >
+          {/* Title */}
+          <motion.div variants={slideInLeft}>
+            <SlashLabel text="// SECTION 03" />
+            <div className="font-anton text-[clamp(44px,5.5vw,72px)] leading-[0.9] text-[#f6fbff] tracking-[2px] mb-2 ml-1">
+              SKILLS
+            </div>
+          </motion.div>
 
           {SKILLS.map((skill, index) => {
             const isActive = index === activeIdx
             return (
-              <div
+              <motion.div
                 key={skill.title}
+                variants={slideInLeft}
                 className="relative cursor-pointer"
                 onMouseEnter={() => {
                   activeIdxRef.current = index
@@ -152,7 +166,7 @@ export function S3_Skills() {
                     </span>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             )
           })}
 
@@ -176,10 +190,15 @@ export function S3_Skills() {
               ))}
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* ── RIGHT — Active skill detail ───────────────── */}
-        <div className="flex flex-col justify-center">
+        <motion.div
+          className="flex flex-col justify-center"
+          variants={fadeStagger}
+          initial="hidden"
+          animate={inView ? 'visible' : 'hidden'}
+        >
           <AnimatePresence mode="wait">
             <motion.div
               key={activeIdx}
@@ -234,7 +253,7 @@ export function S3_Skills() {
               </div>
             </motion.div>
           </AnimatePresence>
-        </div>
+        </motion.div>
 
       </div>
     </section>

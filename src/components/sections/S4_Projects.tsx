@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
-import { modalOverlay, modalContent } from '@/animations/variants'
+import { motion, useScroll, useTransform, AnimatePresence, useInView } from 'framer-motion'
+import { modalOverlay, modalContent, staggerContainer, slideInLeft } from '@/animations/variants'
 import { SlashLabel, GhostText } from '@/components/shared'
 
 interface Project {
@@ -39,39 +39,48 @@ const PROJECTS: Project[] = [
 
 export function S4_Projects() {
   const [selected, setSelected] = useState<Project | null>(null)
+  const ref = useRef<HTMLElement>(null)
+  const inView = useInView(ref, { once: true, margin: '-10%' })
 
   return (
     <>
-      <section className="relative h-screen" id="s4-projects">
+      <section ref={ref} className="relative h-screen" id="s4-projects">
         <div className="absolute inset-0 overflow-hidden">
           <GhostText text="JOURNEY" className="bottom-[-2vh] right-[-1vw]" />
 
-          {/* Header */}
-          <div className="absolute top-12 left-12 z-10 flex flex-col pointer-events-none">
-            <SlashLabel text="// SECTION 04" />
-            <h2 className="font-anton text-[72px] leading-[0.9] text-[#f6fbff] tracking-[2px] mb-2">
-              PROJECTS
-            </h2>
-          </div>
-
-          {/* Horizontal track */}
-          <div
-            className="absolute top-0 left-0 w-full h-full flex flex-row flex-nowrap items-center overflow-x-auto snap-x snap-mandatory scroll-smooth"
-            style={{
-              paddingTop: '100px',
-              paddingLeft: '12vw',
-              paddingRight: '12vw',
-              gap: '4vw',
-              scrollbarWidth: 'none',
-              msOverflowStyle: 'none',
-            }}
+          {/* Animated Wrapper */}
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            animate={inView ? 'visible' : 'hidden'}
+            className="absolute inset-0"
           >
+            {/* Header */}
+            <motion.div variants={slideInLeft} className="absolute top-12 left-12 z-10 flex flex-col pointer-events-none">
+              <SlashLabel text="// SECTION 04" />
+              <h2 className="font-anton text-[72px] leading-[0.9] text-[#f6fbff] tracking-[2px] mb-2">
+                PROJECTS
+              </h2>
+            </motion.div>
+
+            {/* Horizontal track */}
+            <div
+              className="absolute top-0 left-0 w-full h-full flex flex-row flex-nowrap items-center overflow-x-auto snap-x snap-mandatory scroll-smooth"
+              style={{
+                paddingTop: '100px',
+                paddingLeft: '12vw',
+                paddingRight: '12vw',
+                gap: '4vw',
+                scrollbarWidth: 'none',
+                msOverflowStyle: 'none',
+              }}
+            >
             {PROJECTS.map((project, i) => (
               <motion.div
                 key={project.title}
+                variants={slideInLeft}
                 className="shrink-0 w-[28vw] cursor-pointer snap-center"
                 whileHover={{ scale: 1.03, y: -6 }}
-                transition={{ duration: 0.3 }}
                 onClick={() => setSelected(project)}
                 style={{
                   height: '55vh',
@@ -126,7 +135,8 @@ export function S4_Projects() {
                 </div>
               </motion.div>
             ))}
-          </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
