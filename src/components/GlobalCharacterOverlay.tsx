@@ -31,11 +31,11 @@ const PHASES = [
   },
   {
     img:   '/images/char_about.png',
-    // Bottom-right
-    bottom: '0', left: 'auto', right: '0px',
+    // Bottom-right, bigger & nudged right
+    bottom: '0', left: 'auto', right: '-30px',
     x: '0%',
-    scale:  0.85,
-    height: '88vh',
+    scale:  1.0,
+    height: '92vh',
   },
   {
     img:   '/images/char_skills.png',
