@@ -13,22 +13,26 @@ const SKILLS = [
 
 const N = SKILLS.length
 
-/* ─── Shared styles (matching S2 + original) ────────────────────────────────── */
+/* ─── Colors (original palette) ─────────────────────────────────────────────── */
+
+const CYAN        = '#8ef5ff'
+const CYAN_DARK   = '#54fafe'
+const NAVY        = '#10185f'
+const NAVY_DEEP   = '#0b113d'
+const BLUE_SHADOW = 'rgba(0,64,255,0.5)'
+const SKEW        = -12
+
+/* ─── Shared panel styles ───────────────────────────────────────────────────── */
 
 const panelBg   = 'linear-gradient(180deg, rgba(15,28,105,0.96) 0%, rgba(8,16,68,0.97) 100%)'
-const panelClip = 'polygon(0 0, 100% 0, calc(100% - 18px) 100%, 0 100%)'
 
 /**
  * S3_Skills
  *
- * Uses the same CSS-driven stagger animation as the reference Resume.tsx:
- *   - mounted flag (80ms delay) triggers translateX + opacity transitions
- *   - Cards stagger with `index * 55ms` delay
- *   - Right panel uses Framer Motion AnimatePresence (x: 30 → 0)
- *
- * Layout: same as original (grid-cols-2, h-screen snap)
- * Box colors: original dark blue gradients
- * Title: same position as S2 About Me (no SlashLabel)
+ * UI box: skewed parallelogram dari referensi HTML
+ * Warna: palette original (navy, cyan, gradient biru)
+ * Layout: title seperti S2, panel kanan sejajar card pertama
+ * Animasi: stagger CSS dari referensi Resume.tsx
  */
 export function S3_Skills() {
   const [activeIdx, setActiveIdx] = useState(0)
@@ -49,7 +53,7 @@ export function S3_Skills() {
     }
   }, [inView, mounted])
 
-  /* ── Scroll-to-navigate wheel handler ──────────────────────────────────── */
+  /* ── Scroll-to-navigate ────────────────────────────────────────────────── */
   useEffect(() => {
     const COOLDOWN_MS = 500
     const onWheel = (e: WheelEvent) => {
@@ -88,7 +92,7 @@ export function S3_Skills() {
       <div ref={inViewRef} className="relative z-10 w-full px-8 md:px-14 grid grid-cols-2 gap-8 items-start pt-[12vh]">
 
         {/* ══════════════════════════════════════════════════════════════════
-            LEFT — Title + Skill cards
+            LEFT — Title + Skill cards (skewed style)
         ══════════════════════════════════════════════════════════════════ */}
         <div className="flex flex-col gap-3">
 
@@ -105,13 +109,13 @@ export function S3_Skills() {
             SKILLS
           </div>
 
-          {/* Skill cards — original colors, stagger animation from reference */}
+          {/* ── Skewed skill cards ──────────────────────────────────────── */}
           {SKILLS.map((skill, index) => {
             const isActive = index === activeIdx
             return (
               <div
                 key={skill.title}
-                className="relative cursor-pointer"
+                className="cursor-pointer"
                 onMouseEnter={() => {
                   activeIdxRef.current = index
                   setActiveIdx(index)
@@ -122,62 +126,118 @@ export function S3_Skills() {
                   transition: `opacity 0.4s ease ${index * 55}ms, transform 0.4s cubic-bezier(0.22,1,0.36,1) ${index * 55}ms`,
                 }}
               >
+                {/* Skewed card container */}
                 <div
                   style={{
                     position: 'relative',
-                    height: 112,
-                    background: isActive ? '#ffffff' : '#10185f',
-                    clipPath: 'polygon(0 0, 97% 0, 100% 100%, 3% 100%)',
-                    boxShadow: isActive ? '10px 8px 0 #d63232' : '0 8px 0 rgba(5,13,59,0.85)',
-                    transform: isActive ? 'translateX(6px)' : 'translateX(0)',
-                    transition: 'transform 0.22s ease, background 0.22s ease, box-shadow 0.22s ease',
-                    overflow: 'visible',
+                    transform: `skewX(${SKEW}deg)`,
+                    background: isActive ? '#ffffff' : NAVY,
+                    padding: '18px 24px 18px 58px',
+                    borderLeft: `5px solid ${isActive ? CYAN_DARK : 'transparent'}`,
+                    boxShadow: isActive
+                      ? `4px 4px 0px 0px ${BLUE_SHADOW}, inset 0 0 0 1px rgba(133,244,255,0.1)`
+                      : `4px 4px 0px 0px ${BLUE_SHADOW}`,
+                    transition: 'all 0.25s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.borderLeftColor = CYAN_DARK
+                      e.currentTarget.style.background = 'rgba(84,250,254,0.12)'
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.borderLeftColor = 'transparent'
+                      e.currentTarget.style.background = NAVY
+                    }
                   }}
                 >
-                  {/* BADGE */}
+                  {/* Roman numeral badge */}
                   <div
                     style={{
-                      position: 'absolute', top: 10, left: -10, width: 56, height: 70,
-                      background: isActive ? '#000' : '#0b113d',
-                      border: `3px solid ${isActive ? '#000' : '#9cf7ff'}`,
-                      clipPath: 'polygon(14% 0, 100% 0, 84% 100%, 0 100%)',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      transform: 'rotate(-8deg)', boxShadow: '0 4px 0 rgba(0,0,0,0.28)', zIndex: 2,
+                      position: 'absolute',
+                      left: 14,
+                      top: '50%',
+                      transform: `translateY(-50%) skewX(${-SKEW}deg)`,
+                      background: CYAN,
+                      color: NAVY_DEEP,
+                      padding: '3px 9px',
+                      fontFamily: "'Anton', sans-serif",
+                      fontSize: 18,
+                      lineHeight: 1.2,
+                      letterSpacing: '0.05em',
                     }}
                   >
-                    <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, color: '#d2fdff', letterSpacing: 1, transform: 'rotate(8deg)', display: 'block' }}>
-                      {skill.id}
-                    </span>
+                    {skill.id}
                   </div>
 
-                  {/* INNER CONTENT */}
+                  {/* Inner content (counter-skew) */}
                   <div
                     style={{
-                      position: 'absolute', inset: 0, padding: '14px 22px 14px 62px',
-                      display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', zIndex: 1,
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'flex-end',
+                      transform: `skewX(${-SKEW}deg)`,
                     }}
                   >
-                    <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 34, lineHeight: 0.9, letterSpacing: 1, color: isActive ? '#000' : '#a5f6ff', transition: 'color 0.22s ease', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', flex: 1, minWidth: 0 }}>
-                      {skill.title}
+                    {/* Name + subtitle */}
+                    <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minWidth: 0 }}>
+                      <span
+                        style={{
+                          fontFamily: "'Anton', sans-serif",
+                          fontSize: 'clamp(22px, 2.2vw, 32px)',
+                          lineHeight: 1,
+                          letterSpacing: '0.05em',
+                          color: isActive ? '#000' : '#a5f6ff',
+                          transition: 'color 0.25s ease',
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                        }}
+                      >
+                        {skill.title}
+                      </span>
+                      <span
+                        style={{
+                          fontFamily: "'Bebas Neue', sans-serif",
+                          fontSize: 'clamp(10px, 0.8vw, 14px)',
+                          fontWeight: 400,
+                          letterSpacing: '0.12em',
+                          color: isActive ? 'rgba(0,0,0,0.5)' : 'rgba(133,244,255,0.45)',
+                          marginTop: 4,
+                          transition: 'color 0.25s ease',
+                          textTransform: 'uppercase',
+                        }}
+                      >
+                        {skill.subtitle}
+                      </span>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 2, flexShrink: 0 }}>
-                      <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 2, color: isActive ? '#000' : '#9ffbff', transition: 'color 0.22s ease' }}>RANK</div>
-                      <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 44, lineHeight: 0.82, color: isActive ? '#000' : '#9ffbff', transition: 'color 0.22s ease' }}>{skill.rank}</div>
-                    </div>
-                  </div>
 
-                  {/* SUBTITLE */}
-                  <div
-                    style={{
-                      position: 'absolute', left: 64, right: 14, bottom: 12, height: 34,
-                      background: isActive ? '#000' : '#85f4ff',
-                      clipPath: 'polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%)',
-                      display: 'flex', alignItems: 'center', padding: '0 18px', zIndex: 1,
-                    }}
-                  >
-                    <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 24, lineHeight: 1, letterSpacing: 1, color: isActive ? '#fff' : '#041238' }}>
-                      {skill.subtitle}
-                    </span>
+                    {/* Rank */}
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, flexShrink: 0 }}>
+                      <span
+                        style={{
+                          fontFamily: "'Bebas Neue', sans-serif",
+                          fontSize: 'clamp(10px, 0.7vw, 14px)',
+                          letterSpacing: '0.15em',
+                          color: isActive ? 'rgba(0,0,0,0.4)' : 'rgba(159,251,255,0.5)',
+                          transition: 'color 0.25s ease',
+                        }}
+                      >
+                        RANK
+                      </span>
+                      <span
+                        style={{
+                          fontFamily: "'Anton', sans-serif",
+                          fontSize: 'clamp(30px, 2.8vw, 44px)',
+                          lineHeight: 1,
+                          color: isActive ? '#000' : '#9ffbff',
+                          transition: 'color 0.25s ease',
+                        }}
+                      >
+                        {skill.rank}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -185,29 +245,22 @@ export function S3_Skills() {
           })}
 
           {/* Scroll hint */}
-          <div className="flex items-center gap-2 mt-1 ml-4 opacity-40">
-            <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 3, color: '#8ef5ff' }}>
-              SCROLL TO NAVIGATE
+          <div
+            className="flex items-center gap-2 mt-1 ml-4"
+            style={{
+              opacity: mounted ? 0.4 : 0,
+              transition: 'opacity 0.4s ease 0.35s',
+            }}
+          >
+            <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 3, color: CYAN }}>
+              // SCROLL TO NAVIGATE
             </span>
-            <div style={{ display: 'flex', gap: 4 }}>
-              {SKILLS.map((_, i) => (
-                <div
-                  key={i}
-                  style={{
-                    width: i === activeIdx ? 20 : 6,
-                    height: 4,
-                    background: i === activeIdx ? '#8ef5ff' : 'rgba(142,245,255,0.3)',
-                    borderRadius: 2,
-                    transition: 'all 0.3s ease',
-                  }}
-                />
-              ))}
-            </div>
+            <div style={{ width: 80, height: 1, borderBottom: `1px dashed ${CYAN}`, opacity: 0.5 }} />
           </div>
         </div>
 
         {/* ══════════════════════════════════════════════════════════════════
-            RIGHT — Active skill detail (top-aligned with first card)
+            RIGHT — Detail panel (top-aligned with first card, original colors)
         ══════════════════════════════════════════════════════════════════ */}
         <div className="flex flex-col" style={{ marginTop: 'calc(clamp(44px, 5.5vw, 72px) + 20px)' }}>
           <AnimatePresence mode="wait">
@@ -222,7 +275,7 @@ export function S3_Skills() {
                 minHeight: '450px',
                 padding: '22px 24px 24px 24px',
                 background: panelBg,
-                clipPath: panelClip,
+                clipPath: 'polygon(0 0, 100% 0, calc(100% - 18px) 100%, 0 100%)',
                 boxShadow: 'inset 0 0 0 1px rgba(133,244,255,0.16), 16px 16px 0 rgba(0,6,30,0.55)',
               }}
             >
@@ -256,7 +309,7 @@ export function S3_Skills() {
                     key={i}
                     className="h-[14px] flex-1"
                     style={{
-                      background: i < active.rank ? '#8ef5ff' : 'rgba(142, 245, 255, 0.1)',
+                      background: i < active.rank ? CYAN : 'rgba(142, 245, 255, 0.1)',
                       clipPath: 'polygon(0 0, 100% 0, calc(100% - 4px) 100%, 0 100%)',
                     }}
                   />
