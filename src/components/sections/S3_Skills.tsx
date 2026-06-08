@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
-import { staggerContainer, slideInLeft, skillDetailTransition, fadeStagger } from '@/animations/variants'
+
 import { GhostText } from '@/components/shared'
 
 /* ─── Data (original) ───────────────────────────────────────────────────────── */
@@ -25,7 +25,7 @@ const SKEW        = -12
 
 /* ─── Shared panel styles ───────────────────────────────────────────────────── */
 
-const panelBg   = 'linear-gradient(180deg, rgba(15,28,105,0.96) 0%, rgba(8,16,68,0.97) 100%)'
+
 
 /**
  * S3_Skills

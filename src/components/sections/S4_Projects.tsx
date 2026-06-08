@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { motion, useScroll, useTransform, AnimatePresence, useInView } from 'framer-motion'
+import { motion, AnimatePresence, useInView } from 'framer-motion'
 import { modalOverlay, modalContent, staggerContainer, slideInLeft } from '@/animations/variants'
 import { SlashLabel, GhostText } from '@/components/shared'
 

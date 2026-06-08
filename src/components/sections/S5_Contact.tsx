@@ -57,7 +57,7 @@ export function S5_Contact() {
         whileInView="visible"
         viewport={{ once: true }}
       >
-        {CARDS.map((card, i) => (
+        {CARDS.map((card) => (
           <motion.a
             key={card.label}
             href={card.url}
