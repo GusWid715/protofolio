@@ -91,7 +91,7 @@ export function S3_Skills() {
     >
       <GhostText text="ARCANA" className="bottom-[-2vh] left-[-1vw]" />
 
-      <div ref={inViewRef} className="relative z-10 w-full px-8 md:px-14 grid grid-cols-2 gap-8 items-start pt-[12vh]">
+      <div ref={inViewRef} className="relative z-10 w-full px-8 md:px-14 grid grid-cols-1 md:grid-cols-[1.2fr_0.8fr] gap-12 md:gap-24 items-start pt-[12vh]">
 
         {/* ══════════════════════════════════════════════════════════════════
             LEFT — Title + Skill cards (skewed style)
