@@ -1,49 +1,42 @@
 import { useRef, useState, useEffect } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import { skillDetailTransition, staggerContainer, slideInLeft, fadeStagger } from '@/animations/variants'
-import { GhostText, SlashLabel } from '@/components/shared'
+import { GhostText } from '@/components/shared'
+
+/* ─── Data ──────────────────────────────────────────────────────────────────── */
 
 const SKILLS = [
-  { id: 'I',   title: 'Python Programming', subtitle: 'Backend / Automation', rank: 7, max: 10, desc: 'Extensive experience in writing scripts for data scraping, automation, and backend logic.' },
-  { id: 'II',  title: 'Data Analysis',      subtitle: 'Data Science',         rank: 7, max: 10, desc: 'Skilled in exploratory data analysis, data cleaning, and processing unstructured public data.' },
-  { id: 'III', title: 'Machine Learning',   subtitle: 'AI / Models',          rank: 6, max: 10, desc: 'Proficient in implementing clustering algorithms like KMeans and PCA for data classification.' },
-  { id: 'IV',  title: 'Web Development',    subtitle: 'Frontend / Fullstack', rank: 6, max: 10, desc: 'Building modern, interactive user interfaces using React.js, Tailwind CSS, and Framer Motion.' },
+  { id: 'I',   title: 'PYTHON',     subtitle: 'BACKEND / AUTOMATION',   rank: 8, max: 10, desc: 'Extensive experience in writing scripts for data scraping, automation, and backend logic.' },
+  { id: 'II',  title: 'TYPESCRIPT', subtitle: 'FRONTEND ARCHITECTURE', rank: 8, max: 10, desc: 'Skilled in building type-safe, scalable frontend applications with React and modern TypeScript patterns.' },
+  { id: 'III', title: 'AWS CLOUD',  subtitle: 'INFRASTRUCTURE',        rank: 6, max: 10, desc: 'Proficient in deploying and managing cloud infrastructure using AWS services like EC2, S3, and Lambda.' },
+  { id: 'IV',  title: 'UI DESIGN',  subtitle: 'VISUAL SYSTEMS',        rank: 9, max: 10, desc: 'Building modern, interactive user interfaces with attention to detail, motion design, and visual hierarchy.' },
 ]
 
 const N = SKILLS.length
 
-/**
- * S3_Skills
- *
- * Section tetap h-screen (snap normal). Wheel events di-intercept saat section
- * ini ter-snap ke viewport:
- *   - Scroll ↓ → skill berikutnya (preventDefault, tidak scroll halaman)
- *   - Scroll ↓ di skill terakhir → biarkan, browser snap ke S4
- *   - Scroll ↑ → skill sebelumnya (preventDefault)
- *   - Scroll ↑ di skill pertama → biarkan, browser snap ke S2
- *
- * Cooldown 500ms mencegah rapid-fire dari trackpad.
- */
+/* ─── Style constants ───────────────────────────────────────────────────────── */
+
+const CYAN     = '#54fafe'
+const DEEP_NAVY = '#001A66'
+const BLUE_SHADOW = 'rgba(0,64,255,0.5)'
+
+/* ─── Component ─────────────────────────────────────────────────────────────── */
+
 export function S3_Skills() {
   const [activeIdx, setActiveIdx] = useState(0)
-
-  // Ref untuk akses sinkron di event handler (hindari stale closure)
   const activeIdxRef = useRef(0)
   const cooldownRef  = useRef(false)
   const sectionRef   = useRef<HTMLElement>(null)
 
-  // Animasi entrance — trigger saat section masuk viewport
   const inViewRef = useRef<HTMLDivElement>(null)
   const inView    = useInView(inViewRef, { once: true, margin: '-10%' })
 
+  /* ── Scroll-to-navigate wheel handler ──────────────────────────────────── */
   useEffect(() => {
     const COOLDOWN_MS = 500
-
     const onWheel = (e: WheelEvent) => {
       const el = sectionRef.current
       if (!el) return
-
-      // Hanya intercept saat section ini ter-snap ke top viewport
       const { top } = el.getBoundingClientRect()
       if (Math.abs(top) > window.innerHeight * 0.15) return
 
@@ -52,21 +45,19 @@ export function S3_Skills() {
       const next    = current + going
 
       if (next >= 0 && next < N) {
-        // Masih ada skill berikutnya — cegah scroll halaman
         e.preventDefault()
         if (cooldownRef.current) return
         cooldownRef.current = true
         setTimeout(() => { cooldownRef.current = false }, COOLDOWN_MS)
-
         activeIdxRef.current = next
         setActiveIdx(next)
       }
-      // Di batas pertama/terakhir: tidak preventDefault → browser snap ke section lain
     }
-
     window.addEventListener('wheel', onWheel, { passive: false })
     return () => window.removeEventListener('wheel', onWheel)
   }, [])
+
+  const active = SKILLS[activeIdx]
 
   return (
     <section
@@ -76,185 +67,329 @@ export function S3_Skills() {
     >
       <GhostText text="ARCANA" className="bottom-[-2vh] left-[-1vw]" />
 
-      <div ref={inViewRef} className="relative z-10 w-full px-8 md:px-14 grid grid-cols-2 gap-8 items-center">
+      <div ref={inViewRef} className="relative z-10 w-full h-full flex flex-col px-8 md:px-14 pt-[8vh]">
 
-        {/* ── LEFT — Skill list ─────────────────────────── */}
+        {/* ── Title ──────────────────────────────────────────── */}
         <motion.div
-          className="flex flex-col gap-3"
-          variants={staggerContainer}
+          variants={slideInLeft}
           initial="hidden"
           animate={inView ? 'visible' : 'hidden'}
+          className="mb-6"
         >
-          {/* Title */}
-          <motion.div variants={slideInLeft}>
-            <SlashLabel text="// SECTION 03" />
-            <div className="font-anton text-[clamp(44px,5.5vw,72px)] leading-[0.9] text-[#f6fbff] tracking-[2px] mb-2 ml-1">
-              SKILLS
-            </div>
-          </motion.div>
+          <h2
+            className="font-anton text-white italic drop-shadow-[3px_3px_0px_#0040ff]"
+            style={{
+              fontSize: 'clamp(52px, 6.5vw, 88px)',
+              lineHeight: 0.95,
+              letterSpacing: '0.02em',
+              transform: 'skewX(-12deg)',
+            }}
+          >
+            SKILLS
+          </h2>
+        </motion.div>
 
-          {SKILLS.map((skill, index) => {
-            const isActive = index === activeIdx
-            return (
-              <motion.div
-                key={skill.title}
-                variants={slideInLeft}
-                className="relative cursor-pointer"
-                onMouseEnter={() => {
-                  activeIdxRef.current = index
-                  setActiveIdx(index)
-                }}
+        {/* ── Content Grid ───────────────────────────────────── */}
+        <div className="flex gap-8 flex-1 min-h-0 pb-[10vh]">
+
+          {/* ── LEFT — Skill cards ─────────────────────────── */}
+          <motion.div
+            className="flex flex-col gap-3 w-[42%] shrink-0 justify-center"
+            variants={staggerContainer}
+            initial="hidden"
+            animate={inView ? 'visible' : 'hidden'}
+          >
+            {SKILLS.map((skill, index) => {
+              const isActive = index === activeIdx
+              return (
+                <motion.div
+                  key={skill.title}
+                  variants={slideInLeft}
+                  className="cursor-pointer"
+                  onClick={() => { activeIdxRef.current = index; setActiveIdx(index) }}
+                  onMouseEnter={() => { activeIdxRef.current = index; setActiveIdx(index) }}
+                >
+                  {/* Skewed card */}
+                  <div
+                    style={{
+                      position: 'relative',
+                      transform: 'skewX(-12deg)',
+                      background: isActive ? '#ffffff' : `${DEEP_NAVY}cc`,
+                      padding: '14px 20px 14px 52px',
+                      borderLeft: `5px solid ${isActive ? CYAN : 'transparent'}`,
+                      boxShadow: `4px 4px 0px 0px ${BLUE_SHADOW}`,
+                      transition: 'all 0.25s ease',
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isActive) {
+                        e.currentTarget.style.borderLeftColor = CYAN
+                        e.currentTarget.style.background = 'rgba(84,250,254,0.15)'
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isActive) {
+                        e.currentTarget.style.borderLeftColor = 'transparent'
+                        e.currentTarget.style.background = `${DEEP_NAVY}cc`
+                      }
+                    }}
+                  >
+                    {/* Roman numeral badge */}
+                    <div
+                      style={{
+                        position: 'absolute',
+                        left: 10,
+                        top: '50%',
+                        transform: 'translateY(-50%) skewX(12deg)',
+                        background: CYAN,
+                        color: '#000',
+                        padding: '2px 8px',
+                        fontFamily: "'Anton', sans-serif",
+                        fontSize: 18,
+                        lineHeight: 1.2,
+                        letterSpacing: '0.05em',
+                      }}
+                    >
+                      {skill.id}
+                    </div>
+
+                    {/* Inner content (counter-skew) */}
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'flex-end',
+                        transform: 'skewX(12deg)',
+                      }}
+                    >
+                      {/* Name + subtitle */}
+                      <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        <span
+                          style={{
+                            fontFamily: "'Anton', sans-serif",
+                            fontSize: 'clamp(20px, 2vw, 28px)',
+                            lineHeight: 1,
+                            letterSpacing: '0.05em',
+                            color: isActive ? '#000' : '#fff',
+                            transition: 'color 0.25s ease',
+                          }}
+                        >
+                          {skill.title}
+                        </span>
+                        <span
+                          style={{
+                            fontFamily: "'Orbitron', monospace",
+                            fontSize: 'clamp(8px, 0.7vw, 11px)',
+                            fontWeight: 700,
+                            letterSpacing: '0.15em',
+                            color: isActive ? 'rgba(0,0,0,0.6)' : 'rgba(84,250,254,0.5)',
+                            marginTop: 3,
+                            transition: 'color 0.25s ease',
+                          }}
+                        >
+                          {skill.subtitle}
+                        </span>
+                      </div>
+
+                      {/* Rank */}
+                      <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, flexShrink: 0 }}>
+                        <span
+                          style={{
+                            fontFamily: "'Orbitron', monospace",
+                            fontSize: 'clamp(8px, 0.6vw, 10px)',
+                            fontWeight: 700,
+                            letterSpacing: '0.15em',
+                            color: isActive ? 'rgba(0,0,0,0.5)' : 'rgba(84,250,254,0.4)',
+                            transition: 'color 0.25s ease',
+                          }}
+                        >
+                          RANK
+                        </span>
+                        <span
+                          style={{
+                            fontFamily: "'Anton', sans-serif",
+                            fontSize: 'clamp(28px, 2.5vw, 40px)',
+                            lineHeight: 1,
+                            color: isActive ? '#000' : '#fff',
+                            transition: 'color 0.25s ease',
+                          }}
+                        >
+                          {skill.rank}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )
+            })}
+
+            {/* Scroll hint */}
+            <motion.div variants={slideInLeft} className="flex items-center gap-3 mt-4 ml-2">
+              <span
                 style={{
-                  transform: isActive ? 'translateX(6px)' : 'translateX(0)',
-                  transition: 'transform 0.22s ease',
+                  fontFamily: "'Orbitron', monospace",
+                  fontSize: 10,
+                  fontWeight: 700,
+                  letterSpacing: '0.2em',
+                  color: CYAN,
+                  opacity: 0.6,
                 }}
               >
+                // SCROLL TO NAVIGATE
+              </span>
+              <div
+                style={{
+                  width: 80,
+                  height: 1,
+                  borderBottom: `1px dashed ${CYAN}`,
+                  opacity: 0.35,
+                }}
+              />
+            </motion.div>
+          </motion.div>
+
+          {/* ── RIGHT — Skill detail panel ──────────────────── */}
+          <motion.div
+            className="flex-1 flex items-end justify-center pb-4"
+            variants={fadeStagger}
+            initial="hidden"
+            animate={inView ? 'visible' : 'hidden'}
+          >
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeIdx}
+                variants={skillDetailTransition}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                style={{
+                  width: '100%',
+                  maxWidth: 560,
+                  transform: 'skewX(-12deg)',
+                  boxShadow: `4px 4px 0px 0px ${BLUE_SHADOW}`,
+                  borderLeft: `5px solid ${CYAN}`,
+                  overflow: 'hidden',
+                }}
+              >
+                {/* ── Header (white bar) ──────────────────── */}
                 <div
                   style={{
-                    position: 'relative',
-                    height: 112,
-                    background: isActive ? '#ffffff' : '#10185f',
-                    clipPath: 'polygon(0 0, 97% 0, 100% 100%, 3% 100%)',
-                    boxShadow: isActive ? '10px 8px 0 #d63232' : '0 8px 0 rgba(5,13,59,0.85)',
-                    transition: 'background 0.22s ease, box-shadow 0.22s ease',
-                    overflow: 'visible',
+                    background: '#fff',
+                    padding: '14px 22px',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
                   }}
                 >
-                  {/* BADGE */}
-                  <div
-                    style={{
-                      position: 'absolute', top: 10, left: -10, width: 56, height: 70,
-                      background: isActive ? '#000' : '#0b113d',
-                      border: `3px solid ${isActive ? '#000' : '#9cf7ff'}`,
-                      clipPath: 'polygon(14% 0, 100% 0, 84% 100%, 0 100%)',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      transform: 'rotate(-8deg)', boxShadow: '0 4px 0 rgba(0,0,0,0.28)', zIndex: 2,
-                    }}
-                  >
-                    <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, color: '#d2fdff', letterSpacing: 1, transform: 'rotate(8deg)', display: 'block' }}>
-                      {skill.id}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, transform: 'skewX(12deg)' }}>
+                    {/* Badge */}
+                    <span
+                      style={{
+                        background: '#000',
+                        color: '#fff',
+                        padding: '3px 10px',
+                        fontFamily: "'Anton', sans-serif",
+                        fontSize: 20,
+                        lineHeight: 1.2,
+                        letterSpacing: '0.05em',
+                      }}
+                    >
+                      {active.id}
+                    </span>
+                    <span
+                      style={{
+                        fontFamily: "'Anton', sans-serif",
+                        fontSize: 'clamp(18px, 1.8vw, 26px)',
+                        letterSpacing: '0.08em',
+                        fontStyle: 'italic',
+                        color: '#000',
+                      }}
+                    >
+                      SKILL DETAIL
                     </span>
                   </div>
-
-                  {/* INNER CONTENT */}
-                  <div
-                    style={{
-                      position: 'absolute', inset: 0, padding: '14px 22px 14px 62px',
-                      display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', zIndex: 1,
-                    }}
-                  >
-                    <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 34, lineHeight: 0.9, letterSpacing: 1, color: isActive ? '#000' : '#a5f6ff', transition: 'color 0.22s ease', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', flex: 1, minWidth: 0 }}>
-                      {skill.title}
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 2, flexShrink: 0 }}>
-                      <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 2, color: isActive ? '#000' : '#9ffbff', transition: 'color 0.22s ease' }}>RANK</div>
-                      <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 44, lineHeight: 0.82, color: isActive ? '#000' : '#9ffbff', transition: 'color 0.22s ease' }}>{skill.rank}</div>
-                    </div>
-                  </div>
-
-                  {/* SUBTITLE */}
-                  <div
-                    style={{
-                      position: 'absolute', left: 64, right: 14, bottom: 12, height: 34,
-                      background: isActive ? '#000' : '#85f4ff',
-                      clipPath: 'polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%)',
-                      display: 'flex', alignItems: 'center', padding: '0 18px', zIndex: 1,
-                    }}
-                  >
-                    <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 24, lineHeight: 1, letterSpacing: 1, color: isActive ? '#fff' : '#041238' }}>
-                      {skill.subtitle}
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 2, transform: 'skewX(12deg)' }}>
+                    <span
+                      style={{
+                        fontFamily: "'Anton', sans-serif",
+                        fontSize: 'clamp(24px, 2.2vw, 34px)',
+                        color: '#000',
+                        lineHeight: 1,
+                      }}
+                    >
+                      {active.rank}
                     </span>
+                    <span
+                      style={{
+                        fontFamily: "'Anton', sans-serif",
+                        fontSize: 'clamp(24px, 2.2vw, 34px)',
+                        color: 'rgba(0,0,0,0.5)',
+                        lineHeight: 1,
+                      }}
+                    >
+                      /{active.max}
+                    </span>
+                  </div>
+                </div>
+
+                {/* ── Body (navy) ─────────────────────────── */}
+                <div
+                  style={{
+                    background: `${DEEP_NAVY}cc`,
+                    padding: '22px 26px 24px 26px',
+                  }}
+                >
+                  <div style={{ transform: 'skewX(12deg)' }}>
+                    {/* Description label */}
+                    <span
+                      style={{
+                        fontFamily: "'Orbitron', monospace",
+                        fontSize: 10,
+                        fontWeight: 700,
+                        letterSpacing: '0.15em',
+                        color: CYAN,
+                        opacity: 0.7,
+                        display: 'block',
+                        marginBottom: 10,
+                      }}
+                    >
+                      DESCRIPTION
+                    </span>
+
+                    {/* Description text */}
+                    <p
+                      style={{
+                        fontFamily: "'Rajdhani', sans-serif",
+                        fontWeight: 500,
+                        fontSize: 'clamp(15px, 1.3vw, 19px)',
+                        lineHeight: 1.5,
+                        color: '#fff',
+                        marginBottom: 22,
+                      }}
+                    >
+                      {active.desc}
+                    </p>
+
+                    {/* Progression bar */}
+                    <div style={{ display: 'flex', gap: 5 }}>
+                      {Array.from({ length: active.max }).map((_, i) => (
+                        <div
+                          key={i}
+                          style={{
+                            width: 18,
+                            height: 8,
+                            background: i < active.rank ? CYAN : 'rgba(84,250,254,0.15)',
+                            transition: 'background 0.3s ease',
+                          }}
+                        />
+                      ))}
+                    </div>
                   </div>
                 </div>
               </motion.div>
-            )
-          })}
+            </AnimatePresence>
+          </motion.div>
 
-          {/* Scroll hint */}
-          <div className="flex items-center gap-2 mt-1 ml-4 opacity-40">
-            <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 3, color: '#8ef5ff' }}>
-              SCROLL TO NAVIGATE
-            </span>
-            <div style={{ display: 'flex', gap: 4 }}>
-              {SKILLS.map((_, i) => (
-                <div
-                  key={i}
-                  style={{
-                    width: i === activeIdx ? 20 : 6,
-                    height: 4,
-                    background: i === activeIdx ? '#8ef5ff' : 'rgba(142,245,255,0.3)',
-                    borderRadius: 2,
-                    transition: 'all 0.3s ease',
-                  }}
-                />
-              ))}
-            </div>
-          </div>
-        </motion.div>
-
-        {/* ── RIGHT — Active skill detail ───────────────── */}
-        <motion.div
-          className="flex flex-col justify-center"
-          variants={fadeStagger}
-          initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
-        >
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeIdx}
-              variants={skillDetailTransition}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              style={{
-                width: '100%',
-                minHeight: '450px',
-                padding: '22px 24px 24px 24px',
-                background: 'linear-gradient(180deg, rgba(15,28,105,0.96) 0%, rgba(8,16,68,0.97) 100%)',
-                clipPath: 'polygon(0 0, 100% 0, calc(100% - 18px) 100%, 0 100%)',
-                boxShadow: 'inset 0 0 0 1px rgba(133,244,255,0.16), 16px 16px 0 rgba(0,6,30,0.55)',
-              }}
-            >
-              {/* TOP BAR */}
-              <div
-                style={{
-                  display: 'grid', gridTemplateColumns: '70px 1fr auto',
-                  alignItems: 'center', gap: 14, minHeight: 92, padding: '0 18px',
-                  background: 'linear-gradient(90deg, #8ef5ff 0%, #d3fdff 100%)',
-                  clipPath: 'polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%)',
-                  color: '#08153f', boxShadow: '10px 0 0 rgba(255,94,136,0.88)',
-                }}
-              >
-                <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 46, lineHeight: 1 }}>0{activeIdx + 1}</div>
-                <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 42, lineHeight: 0.92, letterSpacing: 1 }}>SKILL DETAIL</div>
-                <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 42, letterSpacing: 2 }}>{SKILLS[activeIdx].rank}/{SKILLS[activeIdx].max}</div>
-              </div>
-
-              {/* DESC BOX */}
-              <div style={{ marginTop: 22, padding: 18, background: 'rgba(5,13,57,0.97)', clipPath: 'polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%)' }}>
-                <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 30, letterSpacing: 2, color: '#91f5ff', marginBottom: 14 }}>DESCRIPTION</div>
-                <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 24, lineHeight: 1.3, color: '#edfaff', marginBottom: 8 }}>
-                  {SKILLS[activeIdx].desc}
-                </div>
-              </div>
-
-              {/* RANK METER */}
-              <div className="flex gap-[4px] mt-6" style={{ padding: '0 18px' }}>
-                {Array.from({ length: SKILLS[activeIdx].max }).map((_, i) => (
-                  <div
-                    key={i}
-                    className="h-[14px] flex-1"
-                    style={{
-                      background: i < SKILLS[activeIdx].rank ? '#8ef5ff' : 'rgba(142, 245, 255, 0.1)',
-                      clipPath: 'polygon(0 0, 100% 0, calc(100% - 4px) 100%, 0 100%)',
-                    }}
-                  />
-                ))}
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </motion.div>
-
+        </div>
       </div>
     </section>
   )
