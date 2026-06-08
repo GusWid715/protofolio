@@ -37,13 +37,23 @@ const panelBg   = 'linear-gradient(180deg, rgba(15,28,105,0.96) 0%, rgba(8,16,68
  */
 export function S3_Skills() {
   const [activeIdx, setActiveIdx] = useState(0)
+  const [mounted, setMounted]     = useState(false)
 
   const activeIdxRef = useRef(0)
   const cooldownRef  = useRef(false)
   const sectionRef   = useRef<HTMLElement>(null)
 
   const inViewRef = useRef<HTMLDivElement>(null)
-  const inView    = useInView(inViewRef, { once: true, margin: '-10%' })
+  // amount: 0.3 memastikan animasi baru terpicu saat section terlihat 30% di layar
+  const inView    = useInView(inViewRef, { once: true, amount: 0.3 })
+
+  // Trigger mounted state persis seperti referensi Resume.tsx saat inView
+  useEffect(() => {
+    if (inView && !mounted) {
+      const t = setTimeout(() => setMounted(true), 80)
+      return () => clearTimeout(t)
+    }
+  }, [inView, mounted])
 
   /* ── Scroll-to-navigate ────────────────────────────────────────────────── */
   useEffect(() => {
@@ -86,74 +96,49 @@ export function S3_Skills() {
         {/* ══════════════════════════════════════════════════════════════════
             LEFT — Title + Skill cards (skewed style)
         ══════════════════════════════════════════════════════════════════ */}
-        <motion.div 
-          className="flex flex-col gap-3"
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          variants={{
-            hidden: {},
-            visible: { transition: { staggerChildren: 0.055 } }
-          }}
-        >
+        <div className="flex flex-col gap-3">
           {/* Title — matches S2 About Me position */}
-          <motion.div
-            variants={{
-              hidden: { opacity: 0, x: -24 },
-              visible: { opacity: 1, x: 0, transition: { duration: 0.35, ease: "easeOut" } }
-            }}
+          <div
             className="font-anton leading-[0.9] text-[#f6fbff] tracking-[2px] ml-3 mb-2"
-            style={{ fontSize: 'clamp(44px, 5.5vw, 72px)' }}
+            style={{
+              fontSize: 'clamp(44px, 5.5vw, 72px)',
+              opacity: mounted ? 1 : 0,
+              transform: mounted ? "translateX(0)" : "translateX(-24px)",
+              transition: "opacity 0.35s ease, transform 0.35s ease",
+            }}
           >
             SKILLS
-          </motion.div>
+          </div>
 
           {/* ── Skewed skill cards ──────────────────────────────────────── */}
           {SKILLS.map((skill, index) => {
             const isActive = index === activeIdx
             return (
-              <motion.div
+              <div
                 key={skill.title}
-                variants={{
-                  hidden: { opacity: 0, x: -48 },
-                  visible: { 
-                    opacity: 1, 
-                    x: 0, 
-                    transition: { 
-                      opacity: { duration: 0.4, ease: "easeOut" },
-                      x: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } 
-                    } 
-                  }
-                }}
                 className="cursor-pointer"
                 onMouseEnter={() => {
                   activeIdxRef.current = index
                   setActiveIdx(index)
+                }}
+                style={{
+                  opacity: mounted ? 1 : 0,
+                  transform: mounted ? "translateX(0)" : "translateX(-48px)",
+                  transition: `opacity 0.4s ease ${index * 55}ms, transform 0.4s cubic-bezier(0.22,1,0.36,1) ${index * 55}ms`,
                 }}
               >
                 {/* Skewed card container */}
                 <div
                   style={{
                     position: 'relative',
-                    transform: `skewX(${SKEW}deg)`,
+                    transform: isActive ? `translateX(6px) skewX(${SKEW}deg)` : `translateX(0) skewX(${SKEW}deg)`,
                     background: isActive ? '#ffffff' : NAVY,
                     padding: '18px 24px 18px 58px',
                     borderLeft: `5px solid ${isActive ? CYAN_DARK : 'transparent'}`,
                     boxShadow: isActive
-                      ? `4px 4px 0px 0px ${BLUE_SHADOW}, inset 0 0 0 1px rgba(133,244,255,0.1)`
-                      : `4px 4px 0px 0px ${BLUE_SHADOW}`,
-                    transition: 'all 0.25s ease',
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!isActive) {
-                      e.currentTarget.style.borderLeftColor = CYAN_DARK
-                      e.currentTarget.style.background = 'rgba(84,250,254,0.12)'
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!isActive) {
-                      e.currentTarget.style.borderLeftColor = 'transparent'
-                      e.currentTarget.style.background = NAVY
-                    }
+                      ? `10px 8px 0px 0px ${BLUE_SHADOW}, inset 0 0 0 1px rgba(133,244,255,0.1)`
+                      : `0px 8px 0px 0px rgba(5,13,59,0.85)`,
+                    transition: 'transform 0.22s ease, background 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease',
                   }}
                 >
                   {/* Roman numeral badge */}
@@ -244,24 +229,24 @@ export function S3_Skills() {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             )
           })}
 
           {/* Scroll hint */}
-          <motion.div
-            variants={{
-              hidden: { opacity: 0 },
-              visible: { opacity: 0.4, transition: { duration: 0.4, ease: "easeOut" } }
-            }}
+          <div
             className="flex items-center gap-2 mt-1 ml-4"
+            style={{
+              opacity: mounted ? 0.4 : 0,
+              transition: "opacity 0.4s ease 0.35s",
+            }}
           >
             <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 3, color: CYAN }}>
               // SCROLL TO NAVIGATE
             </span>
             <div style={{ width: 80, height: 1, borderBottom: `1px dashed ${CYAN}`, opacity: 0.5 }} />
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         {/* ══════════════════════════════════════════════════════════════════
             RIGHT — Skewed detail panel (top-aligned with first card)
