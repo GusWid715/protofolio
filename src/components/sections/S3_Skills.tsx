@@ -86,15 +86,12 @@ export function S3_Skills() {
         {/* ══════════════════════════════════════════════════════════════════
             LEFT — Title + Skill cards (skewed style)
         ══════════════════════════════════════════════════════════════════ */}
-        <motion.div
-          className="flex flex-col gap-3"
-          variants={staggerContainer}
-          initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
-        >
+        <div className="flex flex-col gap-3">
           {/* Title — matches S2 About Me position */}
           <motion.div
-            variants={slideInLeft}
+            initial={{ opacity: 0, x: -24 }}
+            animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -24 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
             className="font-anton leading-[0.9] text-[#f6fbff] tracking-[2px] ml-3 mb-2"
             style={{ fontSize: 'clamp(44px, 5.5vw, 72px)' }}
           >
@@ -107,7 +104,12 @@ export function S3_Skills() {
             return (
               <motion.div
                 key={skill.title}
-                variants={slideInLeft}
+                initial={{ opacity: 0, x: -48 }}
+                animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -48 }}
+                transition={{
+                  opacity: { duration: 0.4, ease: "easeOut", delay: index * 0.055 },
+                  x: { duration: 0.4, ease: [0.22, 1, 0.36, 1], delay: index * 0.055 }
+                }}
                 className="cursor-pointer"
                 onMouseEnter={() => {
                   activeIdxRef.current = index
@@ -234,15 +236,17 @@ export function S3_Skills() {
 
           {/* Scroll hint */}
           <motion.div
-            variants={slideInLeft}
-            className="flex items-center gap-2 mt-1 ml-4 opacity-40"
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 0.4 } : { opacity: 0 }}
+            transition={{ duration: 0.4, ease: "easeOut", delay: 0.35 }}
+            className="flex items-center gap-2 mt-1 ml-4"
           >
             <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 13, letterSpacing: 3, color: CYAN }}>
               // SCROLL TO NAVIGATE
             </span>
             <div style={{ width: 80, height: 1, borderBottom: `1px dashed ${CYAN}`, opacity: 0.5 }} />
           </motion.div>
-        </motion.div>
+        </div>
 
         {/* ══════════════════════════════════════════════════════════════════
             RIGHT — Detail panel (top-aligned with first card, original colors)
