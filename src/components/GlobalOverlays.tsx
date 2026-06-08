@@ -9,17 +9,7 @@ export function GlobalOverlays() {
         }}
       />
 
-      {/* 2. Scanline CRT overlay */}
-      <div
-        className="fixed inset-0 pointer-events-none z-[9999]"
-        style={{
-          backgroundImage: `repeating-linear-gradient(
-            0deg,
-            transparent, transparent 3px,
-            rgba(0,0,0,0.055) 3px, rgba(0,0,0,0.055) 4px
-          )`
-        }}
-      />
+      {/* 2. Scanline CRT overlay (dihilangkan) */}
 
       {/* 3. Vertical stripes — kanan layar */}
       <div
