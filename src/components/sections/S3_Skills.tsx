@@ -249,70 +249,146 @@ export function S3_Skills() {
         </div>
 
         {/* ══════════════════════════════════════════════════════════════════
-            RIGHT — Detail panel (top-aligned with first card, original colors)
+            RIGHT — Skewed detail panel (top-aligned with first card)
         ══════════════════════════════════════════════════════════════════ */}
-        <motion.div
-          className="flex flex-col"
-          style={{ marginTop: 'calc(clamp(44px, 5.5vw, 72px) + 20px)' }}
-          variants={fadeStagger}
-          initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
-        >
+        <div className="flex flex-col" style={{ marginTop: 'calc(clamp(44px, 5.5vw, 72px) + 20px)' }}>
           <AnimatePresence mode="wait">
-            <motion.div
-              key={activeIdx}
-              variants={skillDetailTransition}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              style={{
-                width: '100%',
-                minHeight: '450px',
-                padding: '22px 24px 24px 24px',
-                background: panelBg,
-                clipPath: 'polygon(0 0, 100% 0, calc(100% - 18px) 100%, 0 100%)',
-                boxShadow: 'inset 0 0 0 1px rgba(133,244,255,0.16), 16px 16px 0 rgba(0,6,30,0.55)',
-              }}
-            >
-              {/* TOP BAR */}
-              <div
-                style={{
-                  display: 'grid', gridTemplateColumns: '70px 1fr auto',
-                  alignItems: 'center', gap: 14, minHeight: 92, padding: '0 18px',
-                  background: 'linear-gradient(90deg, #8ef5ff 0%, #d3fdff 100%)',
-                  clipPath: 'polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%)',
-                  color: '#08153f', boxShadow: '10px 0 0 rgba(255,94,136,0.88)',
-                }}
+            {inView && (
+              <motion.div
+                key={activeIdx}
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 30 }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                style={{ width: '100%' }}
               >
-                <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 46, lineHeight: 1 }}>0{activeIdx + 1}</div>
-                <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 42, lineHeight: 0.92, letterSpacing: 1 }}>SKILL DETAIL</div>
-                <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 42, letterSpacing: 2 }}>{active.rank}/{active.max}</div>
-              </div>
-
-              {/* DESC BOX */}
-              <div style={{ marginTop: 22, padding: 18, background: 'rgba(5,13,57,0.97)', clipPath: 'polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%)' }}>
-                <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 30, letterSpacing: 2, color: '#91f5ff', marginBottom: 14 }}>DESCRIPTION</div>
-                <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 24, lineHeight: 1.3, color: '#edfaff', marginBottom: 8 }}>
-                  {active.desc}
-                </div>
-              </div>
-
-              {/* RANK METER */}
-              <div className="flex gap-[4px] mt-6" style={{ padding: '0 18px' }}>
-                {Array.from({ length: active.max }).map((_, i) => (
+                {/* Skewed container */}
+                <div
+                  style={{
+                    transform: `skewX(${SKEW}deg)`,
+                    borderLeft: `5px solid ${CYAN_DARK}`,
+                    boxShadow: `4px 4px 0px 0px ${BLUE_SHADOW}`,
+                    overflow: 'hidden',
+                  }}
+                >
+                  {/* ── White header ── */}
                   <div
-                    key={i}
-                    className="h-[14px] flex-1"
                     style={{
-                      background: i < active.rank ? CYAN : 'rgba(142, 245, 255, 0.1)',
-                      clipPath: 'polygon(0 0, 100% 0, calc(100% - 4px) 100%, 0 100%)',
+                      background: '#ffffff',
+                      padding: '16px 24px',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
                     }}
-                  />
-                ))}
-              </div>
-            </motion.div>
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 14, transform: `skewX(${-SKEW}deg)` }}>
+                      <span
+                        style={{
+                          background: '#000',
+                          color: '#fff',
+                          padding: '4px 12px',
+                          fontFamily: "'Anton', sans-serif",
+                          fontSize: 22,
+                          lineHeight: 1.2,
+                          letterSpacing: '0.05em',
+                        }}
+                      >
+                        {active.id}
+                      </span>
+                      <span
+                        style={{
+                          fontFamily: "'Anton', sans-serif",
+                          fontSize: 'clamp(20px, 1.8vw, 28px)',
+                          letterSpacing: '0.08em',
+                          fontStyle: 'italic',
+                          color: '#000',
+                        }}
+                      >
+                        SKILL DETAIL
+                      </span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: 2, transform: `skewX(${-SKEW}deg)` }}>
+                      <span
+                        style={{
+                          fontFamily: "'Anton', sans-serif",
+                          fontSize: 'clamp(26px, 2.2vw, 36px)',
+                          color: '#000',
+                          lineHeight: 1,
+                        }}
+                      >
+                        {active.rank}
+                      </span>
+                      <span
+                        style={{
+                          fontFamily: "'Anton', sans-serif",
+                          fontSize: 'clamp(26px, 2.2vw, 36px)',
+                          color: 'rgba(0,0,0,0.4)',
+                          lineHeight: 1,
+                        }}
+                      >
+                        /{active.max}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* ── Navy body ── */}
+                  <div
+                    style={{
+                      background: NAVY,
+                      padding: '24px 28px 28px 28px',
+                    }}
+                  >
+                    <div style={{ transform: `skewX(${-SKEW}deg)` }}>
+                      {/* Description label */}
+                      <span
+                        style={{
+                          fontFamily: "'Bebas Neue', sans-serif",
+                          fontSize: 13,
+                          letterSpacing: '0.15em',
+                          color: CYAN,
+                          opacity: 0.65,
+                          display: 'block',
+                          marginBottom: 12,
+                        }}
+                      >
+                        DESCRIPTION
+                      </span>
+
+                      {/* Description text */}
+                      <p
+                        style={{
+                          fontFamily: "'Rajdhani', sans-serif",
+                          fontWeight: 500,
+                          fontSize: 'clamp(16px, 1.3vw, 20px)',
+                          lineHeight: 1.55,
+                          color: '#f6fbff',
+                          marginBottom: 24,
+                        }}
+                      >
+                        {active.desc}
+                      </p>
+
+                      {/* Progression bar */}
+                      <div style={{ display: 'flex', gap: 6 }}>
+                        {Array.from({ length: active.max }).map((_, i) => (
+                          <div
+                            key={i}
+                            style={{
+                              width: 22,
+                              height: 10,
+                              background: i < active.rank ? CYAN : 'rgba(142,245,255,0.1)',
+                              transition: 'background 0.3s ease',
+                            }}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
           </AnimatePresence>
-        </motion.div>
+        </div>
 
       </div>
     </section>
