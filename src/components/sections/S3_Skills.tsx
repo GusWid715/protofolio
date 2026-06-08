@@ -6,22 +6,22 @@ import { GhostText } from '@/components/shared'
 /* ─── Data (original) ───────────────────────────────────────────────────────── */
 
 const SKILLS = [
-  { id: 'I',   title: 'Python Programming', subtitle: 'Backend / Automation', rank: 7, max: 10, desc: 'Extensive experience in writing scripts for data scraping, automation, and backend logic.' },
-  { id: 'II',  title: 'Data Analysis',      subtitle: 'Data Science',         rank: 7, max: 10, desc: 'Skilled in exploratory data analysis, data cleaning, and processing unstructured public data.' },
-  { id: 'III', title: 'Machine Learning',   subtitle: 'AI / Models',          rank: 6, max: 10, desc: 'Proficient in implementing clustering algorithms like KMeans and PCA for data classification.' },
-  { id: 'IV',  title: 'Web Development',    subtitle: 'Frontend / Fullstack', rank: 6, max: 10, desc: 'Building modern, interactive user interfaces using React.js, Tailwind CSS, and Framer Motion.' },
+  { id: 'I', title: 'Python Programming', subtitle: 'Backend / Automation', rank: 7, max: 10, desc: 'Extensive experience in writing scripts for data scraping, automation, and backend logic.' },
+  { id: 'II', title: 'Data Analysis', subtitle: 'Data Science', rank: 7, max: 10, desc: 'Skilled in exploratory data analysis, data cleaning, and processing unstructured public data.' },
+  { id: 'III', title: 'Machine Learning', subtitle: 'AI / Models', rank: 6, max: 10, desc: 'Proficient in implementing clustering algorithms like KMeans and PCA for data classification.' },
+  { id: 'IV', title: 'Web Development', subtitle: 'Frontend / Fullstack', rank: 6, max: 10, desc: 'Building modern, interactive user interfaces using React.js, Tailwind CSS, and Framer Motion.' },
 ]
 
 const N = SKILLS.length
 
 /* ─── Colors (original palette) ─────────────────────────────────────────────── */
 
-const CYAN        = '#8ef5ff'
-const CYAN_DARK   = '#54fafe'
-const NAVY        = '#10185f'
-const NAVY_DEEP   = '#0b113d'
-const BLUE_SHADOW = 'rgba(0,64,255,0.5)'
-const SKEW        = -12
+const CYAN = '#8ef5ff'
+const CYAN_DARK = '#54fafe'
+const NAVY = '#10185f'
+const NAVY_DEEP = '#0b113d'
+const RED_SHADOW = 'rgba(255, 0, 0, 0.5)'
+const SKEW = -12
 
 /* ─── Shared panel styles ───────────────────────────────────────────────────── */
 
@@ -37,15 +37,15 @@ const SKEW        = -12
  */
 export function S3_Skills() {
   const [activeIdx, setActiveIdx] = useState(0)
-  const [mounted, setMounted]     = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   const activeIdxRef = useRef(0)
-  const cooldownRef  = useRef(false)
-  const sectionRef   = useRef<HTMLElement>(null)
+  const cooldownRef = useRef(false)
+  const sectionRef = useRef<HTMLElement>(null)
 
   const inViewRef = useRef<HTMLDivElement>(null)
   // amount: 0.3 memastikan animasi baru terpicu saat section terlihat 30% di layar
-  const inView    = useInView(inViewRef, { once: true, amount: 0.3 })
+  const inView = useInView(inViewRef, { once: true, amount: 0.3 })
 
   // Trigger mounted state persis seperti referensi Resume.tsx saat inView
   useEffect(() => {
@@ -64,9 +64,9 @@ export function S3_Skills() {
       const { top } = el.getBoundingClientRect()
       if (Math.abs(top) > window.innerHeight * 0.15) return
 
-      const going  = e.deltaY > 0 ? 1 : -1
+      const going = e.deltaY > 0 ? 1 : -1
       const current = activeIdxRef.current
-      const next    = current + going
+      const next = current + going
 
       if (next >= 0 && next < N) {
         e.preventDefault()
@@ -136,7 +136,7 @@ export function S3_Skills() {
                     padding: '18px 24px 18px 58px',
                     borderLeft: `5px solid ${isActive ? CYAN_DARK : 'transparent'}`,
                     boxShadow: isActive
-                      ? `10px 8px 0px 0px ${BLUE_SHADOW}, inset 0 0 0 1px rgba(133,244,255,0.1)`
+                      ? `10px 8px 0px 0px ${RED_SHADOW}, inset 0 0 0 1px rgba(133,244,255,0.1)`
                       : `0px 8px 0px 0px rgba(5,13,59,0.85)`,
                     transition: 'transform 0.22s ease, background 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease',
                   }}
@@ -267,7 +267,7 @@ export function S3_Skills() {
                   style={{
                     transform: `skewX(${SKEW}deg)`,
                     borderLeft: `5px solid ${CYAN_DARK}`,
-                    boxShadow: `4px 4px 0px 0px ${BLUE_SHADOW}`,
+                    boxShadow: `4px 4px 0px 0px ${RED_SHADOW}`,
                     overflow: 'hidden',
                   }}
                 >
