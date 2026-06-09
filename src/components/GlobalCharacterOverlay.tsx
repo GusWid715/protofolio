@@ -40,10 +40,10 @@ const PHASES = [
   {
     img:   '/images/char_skills.webp',
     // Bottom-right, nudged slightly inward so it doesn't clip
-    bottom: '0', left: 'auto', right: '3vw',
+    bottom: '-5vh', left: 'auto', right: '-2vw',
     x: '0%',
     scale:  1.0,
-    height: '100vh',
+    height: '115vh',
   },
   {
     img:   '/images/char_projects.png',
@@ -128,6 +128,7 @@ export function GlobalCharacterOverlay() {
             right:    phase.right,
             height:   phase.height,
             width:    'auto',
+            maxWidth: 'none',
             objectFit: 'contain',
             transformOrigin: 'bottom center',
             userSelect:    'none',
