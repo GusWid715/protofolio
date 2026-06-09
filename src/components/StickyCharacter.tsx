@@ -3,9 +3,9 @@ import { useState, useEffect } from 'react'
 
 const PHASES = [
   // [scrollStart, scrollEnd, imgSrc, position config]
-  { start: 0,     end: 0.125, img: '/images/char_welcome.png',  bottom: '0%', right: 'auto', left: '50%', x: '-50%', scale: 1.0,  height: '80vh' },
-  { start: 0.125, end: 0.375, img: '/images/char_about.png',    bottom: '0',  right: '0%',   left: 'auto', x: '0%',    scale: 1.0,  height: '88vh' },
-  { start: 0.375, end: 0.625, img: '/images/char_skills.png',   bottom: '0',  right: 'auto', left: '2%',  x: '0%',    scale: 0.82, height: '85vh' },
+  { start: 0,     end: 0.125, img: '/images/char_welcome.webp',  bottom: '0%', right: 'auto', left: '50%', x: '-50%', scale: 1.0,  height: '80vh' },
+  { start: 0.125, end: 0.375, img: '/images/char_about.webp',    bottom: '0',  right: '0%',   left: 'auto', x: '0%',    scale: 1.0,  height: '88vh' },
+  { start: 0.375, end: 0.625, img: '/images/char_skills.webp',   bottom: '0',  right: 'auto', left: '2%',  x: '0%',    scale: 0.82, height: '85vh' },
   { start: 0.625, end: 0.875, img: '/images/char_projects.png', bottom: '0',  right: '3%',   left: 'auto', x: '0%',    scale: 0.80, height: '85vh' },
   { start: 0.875, end: 1.0,   img: '/images/char_footer.png',   bottom: '0',  right: 'auto', left: '50%', x: '-50%', scale: 1.1,  height: '80vh' },
 ]

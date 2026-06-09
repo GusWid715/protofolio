@@ -22,7 +22,7 @@ import { useState, useEffect } from 'react'
 
 const PHASES = [
   {
-    img:   '/images/char_welcome.png',
+    img:   '/images/char_welcome.webp',
     // Center screen — translate -50% relative to image own width
     bottom: '0', left: '50%', right: 'auto',
     x: '-50%',
@@ -30,7 +30,7 @@ const PHASES = [
     height: '82vh',
   },
   {
-    img:   '/images/char_about.png',
+    img:   '/images/char_about.webp',
     // Bottom-right, bigger & nudged right
     bottom: '0', left: 'auto', right: '-30px',
     x: '0%',
@@ -38,7 +38,7 @@ const PHASES = [
     height: '92vh',
   },
   {
-    img:   '/images/char_skills.png',
+    img:   '/images/char_skills.webp',
     // Bottom-right, nudged slightly inward so it doesn't clip
     bottom: '0', left: 'auto', right: '3vw',
     x: '0%',
