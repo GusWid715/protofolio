@@ -87,32 +87,34 @@ export function S2_About() {
           initial="hidden"
           animate={inView ? 'visible' : 'hidden'}
           style={{
-            background: 'linear-gradient(180deg, rgba(15,28,105,0.96) 0%, rgba(8,16,68,0.97) 100%)',
-            clipPath: 'polygon(0 0, 100% 0, calc(100% - 18px) 100%, 0 100%)',
-            boxShadow: 'inset 0 0 0 1px rgba(133,244,255,0.16), 8px 8px 0 rgba(0,6,30,0.55)',
+            transform: 'skewX(-12deg)',
+            borderLeft: '5px solid #54fafe',
+            boxShadow: '4px 4px 0px 0px rgba(255, 0, 0, 0.5)',
+            overflow: 'hidden',
           }}
         >
           {/* Header bar */}
           <div style={{
-            display: 'flex', alignItems: 'center', gap: 14,
-            padding: '10px 18px',
-            background: 'linear-gradient(90deg, #8ef5ff 0%, #d3fdff 100%)',
-            clipPath: 'polygon(0 0, 100% 0, calc(100% - 12px) 100%, 0 100%)',
-            color: '#08153f',
-            boxShadow: '8px 0 0 rgba(255,94,136,0.88)',
+            background: '#ffffff',
+            padding: '16px 24px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 14,
           }}>
-            <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 26, lineHeight: 1, letterSpacing: 1 }}>
+            <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 26, lineHeight: 1, letterSpacing: 1, color: '#000', transform: 'skewX(12deg)' }}>
               SOCIAL STATS
             </div>
           </div>
 
           {/* Stat rows */}
-          <motion.div
-            className="flex flex-col gap-3 px-4 py-4"
-            variants={stagger}
-            initial="hidden"
-            animate={inView ? 'visible' : 'hidden'}
-          >
+          <div style={{ background: '#10185f', padding: '24px 28px' }}>
+            <motion.div
+              className="flex flex-col gap-3"
+              style={{ transform: 'skewX(12deg)' }}
+              variants={stagger}
+              initial="hidden"
+              animate={inView ? 'visible' : 'hidden'}
+            >
             {STATS.map(stat => (
               <motion.div key={stat.label} variants={rowIn} className="flex items-center gap-3">
                 {/* Badge */}
@@ -146,7 +148,8 @@ export function S2_About() {
                 </div>
               </motion.div>
             ))}
-          </motion.div>
+            </motion.div>
+          </div>
         </motion.div>
 
         {/* ── PERSONAL DATA BOX ─────────────────── */}
@@ -155,32 +158,33 @@ export function S2_About() {
           initial="hidden"
           animate={inView ? 'visible' : 'hidden'}
           style={{
-            background: 'linear-gradient(180deg, rgba(15,28,105,0.96) 0%, rgba(8,16,68,0.97) 100%)',
-            clipPath: 'polygon(0 0, 100% 0, calc(100% - 18px) 100%, 0 100%)',
-            boxShadow: 'inset 0 0 0 1px rgba(133,244,255,0.16), 8px 8px 0 rgba(0,6,30,0.55)',
+            transform: 'skewX(-12deg)',
+            borderLeft: '5px solid #54fafe',
+            boxShadow: '4px 4px 0px 0px rgba(255, 0, 0, 0.5)',
+            overflow: 'hidden',
           }}
         >
           {/* Header bar */}
           <div style={{
-            display: 'flex', alignItems: 'center',
-            padding: '10px 18px',
-            background: 'linear-gradient(90deg, #8ef5ff 0%, #d3fdff 100%)',
-            clipPath: 'polygon(0 0, 100% 0, calc(100% - 12px) 100%, 0 100%)',
-            color: '#08153f',
-            boxShadow: '8px 0 0 rgba(255,94,136,0.88)',
+            background: '#ffffff',
+            padding: '16px 24px',
+            display: 'flex',
+            alignItems: 'center',
           }}>
-            <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 26, lineHeight: 1, letterSpacing: 1 }}>
+            <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 26, lineHeight: 1, letterSpacing: 1, color: '#000', transform: 'skewX(12deg)' }}>
               PERSONAL DATA
             </div>
           </div>
 
           {/* Data rows */}
-          <motion.div
-            className="flex flex-col px-4 py-3"
-            variants={stagger}
-            initial="hidden"
-            animate={inView ? 'visible' : 'hidden'}
-          >
+          <div style={{ background: '#10185f', padding: '24px 28px' }}>
+            <motion.div
+              className="flex flex-col"
+              style={{ transform: 'skewX(12deg)' }}
+              variants={stagger}
+              initial="hidden"
+              animate={inView ? 'visible' : 'hidden'}
+            >
             {DATA.map((item, index) => (
               <motion.div key={item.id} variants={rowIn} className="flex flex-col">
                 <div className="flex items-center py-[8px] gap-3">
@@ -202,7 +206,8 @@ export function S2_About() {
                 )}
               </motion.div>
             ))}
-          </motion.div>
+            </motion.div>
+          </div>
         </motion.div>
 
       </div>

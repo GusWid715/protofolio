@@ -69,41 +69,52 @@ export function S5_Contact() {
               scale: 1.05,
               transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
             }}
-            className="flex flex-col items-center justify-between no-underline"
-            style={{
-              width: '240px',
-              height: '360px',
-              background: 'linear-gradient(180deg, rgba(15,28,105,0.96) 0%, rgba(8,16,68,0.97) 100%)',
-              clipPath: 'polygon(0 0, 100% 0, calc(100% - 18px) 100%, 0 100%)',
-              boxShadow: 'inset 0 0 0 1px rgba(133,244,255,0.16), 16px 16px 0 rgba(0,6,30,0.55)',
-              padding: '0',
-              cursor: 'pointer',
-            }}
+            className="flex flex-col no-underline"
+            style={{ width: '240px', height: '360px', cursor: 'pointer' }}
           >
-            {/* TOP BAR */}
             <div style={{
-              display: "flex", alignItems: "center", justifyContent: "center", gap: 14, minHeight: 64, padding: "0 18px", width: "100%",
-              background: "linear-gradient(90deg, #8ef5ff 0%, #d3fdff 100%)",
-              clipPath: "polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%)",
-              color: "#08153f", boxShadow: "10px 0 0 rgba(255,94,136,0.88)",
+              width: '100%',
+              height: '100%',
+              transform: 'skewX(-12deg)',
+              borderLeft: '5px solid #54fafe',
+              boxShadow: '10px 8px 0px 0px rgba(255, 0, 0, 0.5)',
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column',
+              background: '#10185f'
             }}>
-              <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 28, lineHeight: 0.92, letterSpacing: 1 }}>{card.label.toUpperCase()}</div>
-            </div>
+              {/* TOP BAR */}
+              <div style={{
+                background: '#ffffff',
+                padding: '16px 24px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minHeight: 64,
+              }}>
+                <div style={{ transform: 'skewX(12deg)', display: 'flex', alignItems: 'center' }}>
+                  <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 28, lineHeight: 0.92, letterSpacing: 1, color: '#000' }}>{card.label.toUpperCase()}</div>
+                </div>
+              </div>
 
-            {/* Icon besar di tengah */}
-            <div
-              className="font-bebas text-[84px] leading-none mt-4 flex-1 flex items-center justify-center"
-              style={{ color: '#8df6ff' }}
-            >
-              {card.icon}
-            </div>
+              {/* CONTENT */}
+              <div className="flex-1 flex flex-col items-center justify-between" style={{ transform: 'skewX(12deg)' }}>
+                {/* Icon besar di tengah */}
+                <div
+                  className="font-bebas text-[84px] leading-none mt-4 flex-1 flex items-center justify-center"
+                  style={{ color: '#8df6ff' }}
+                >
+                  {card.icon}
+                </div>
 
-            {/* Label / Subtitle */}
-            <div className="flex flex-col items-center gap-1 w-full mb-6 px-4">
-              <span className="font-bebas text-[18px] text-[#06133b] px-4 py-1 w-full text-center"
-                    style={{ background: '#8df6ff', clipPath: 'polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%)' }}>
-                {card.sub}
-              </span>
+                {/* Label / Subtitle */}
+                <div className="flex flex-col items-center gap-1 w-full mb-6 px-4">
+                  <span className="font-bebas text-[18px] text-[#06133b] px-4 py-1 w-full text-center"
+                        style={{ background: '#8df6ff' }}>
+                    {card.sub}
+                  </span>
+                </div>
+              </div>
             </div>
 
           </motion.a>

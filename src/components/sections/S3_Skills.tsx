@@ -96,7 +96,7 @@ export function S3_Skills() {
         {/* ══════════════════════════════════════════════════════════════════
             LEFT — Title + Skill cards (skewed style)
         ══════════════════════════════════════════════════════════════════ */}
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-4">
           {/* Title — matches S2 About Me position */}
           <div
             className="font-anton leading-[0.9] text-[#f6fbff] tracking-[2px] ml-3 mb-2"
