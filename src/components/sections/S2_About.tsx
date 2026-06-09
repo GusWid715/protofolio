@@ -86,13 +86,13 @@ export function S2_About() {
           variants={slideIn}
           initial="hidden"
           animate={inView ? 'visible' : 'hidden'}
-          style={{
+        >
+          <div style={{
             transform: 'skewX(-12deg)',
             borderLeft: '5px solid #54fafe',
             boxShadow: '4px 4px 0px 0px rgba(255, 0, 0, 0.5)',
             overflow: 'hidden',
-          }}
-        >
+          }}>
           {/* Header bar */}
           <div style={{
             background: '#ffffff',
@@ -153,6 +153,7 @@ export function S2_About() {
               ))}
             </motion.div>
           </div>
+          </div>
         </motion.div>
 
         {/* ── PERSONAL DATA BOX ─────────────────── */}
@@ -160,13 +161,13 @@ export function S2_About() {
           variants={slideIn}
           initial="hidden"
           animate={inView ? 'visible' : 'hidden'}
-          style={{
+        >
+          <div style={{
             transform: 'skewX(-12deg)',
             borderLeft: '5px solid #54fafe',
             boxShadow: '4px 4px 0px 0px rgba(255, 0, 0, 0.5)',
             overflow: 'hidden',
-          }}
-        >
+          }}>
           {/* Header bar */}
           <div style={{
             background: '#ffffff',
@@ -211,6 +212,7 @@ export function S2_About() {
                 </motion.div>
               ))}
             </motion.div>
+          </div>
           </div>
         </motion.div>
 
