@@ -115,39 +115,39 @@ export function S2_About() {
               initial="hidden"
               animate={inView ? 'visible' : 'hidden'}
             >
-            {STATS.map(stat => (
-              <motion.div key={stat.label} variants={rowIn} className="flex items-center gap-3">
-                {/* Badge */}
-                <div style={{
-                  width: 36, height: 44, flexShrink: 0,
-                  background: '#0b113d',
-                  border: '2px solid #9cf7ff',
-                  clipPath: 'polygon(14% 0, 100% 0, 84% 100%, 0 100%)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                }}>
-                  <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, color: '#d2fdff' }}>
-                    {stat.id}
-                  </span>
-                </div>
-
-                <div className="flex flex-col gap-[3px] flex-1">
-                  <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 12, color: '#8ef5ff', letterSpacing: 3 }}>
-                    {stat.label}
-                  </span>
-                  <div className="flex gap-[3px] h-[7px]" style={{ width: '75%' }}>
-                    {Array.from({ length: stat.max }).map((_, i) => (
-                      <div key={i} className="flex-1" style={{
-                        background: i < stat.value ? '#f4bc20' : 'rgba(84,250,254,0.15)',
-                        clipPath: 'polygon(0 0, 100% 0, calc(100% - 3px) 100%, 0 100%)',
-                      }} />
-                    ))}
+              {STATS.map(stat => (
+                <motion.div key={stat.label} variants={rowIn} className="flex items-center gap-3">
+                  {/* Badge */}
+                  <div style={{
+                    width: 36, height: 44, flexShrink: 0,
+                    background: '#0b113d',
+                    border: '2px solid #9cf7ff',
+                    clipPath: 'polygon(14% 0, 100% 0, 84% 100%, 0 100%)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  }}>
+                    <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, color: '#d2fdff' }}>
+                      {stat.id}
+                    </span>
                   </div>
-                  <span style={{ fontFamily: "'Rajdhani', sans-serif", fontWeight: 600, fontSize: 14, color: '#f6fbff' }}>
-                    {stat.level}
-                  </span>
-                </div>
-              </motion.div>
-            ))}
+
+                  <div className="flex flex-col gap-[3px] flex-1">
+                    <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 12, color: '#8ef5ff', letterSpacing: 3 }}>
+                      {stat.label}
+                    </span>
+                    <div className="flex gap-[3px] h-[7px]" style={{ width: '75%' }}>
+                      {Array.from({ length: stat.max }).map((_, i) => (
+                        <div key={i} className="flex-1" style={{
+                          background: i < stat.value ? '#f4bc20' : 'rgba(84,250,254,0.15)',
+                          clipPath: 'polygon(0 0, 100% 0, calc(100% - 3px) 100%, 0 100%)',
+                        }} />
+                      ))}
+                    </div>
+                    <span style={{ fontFamily: "'Rajdhani', sans-serif", fontWeight: 600, fontSize: 16, color: '#f6fbff', textAlign: 'left' }}>
+                      {stat.level}
+                    </span>
+                  </div>
+                </motion.div>
+              ))}
             </motion.div>
           </div>
         </motion.div>
@@ -185,27 +185,27 @@ export function S2_About() {
               initial="hidden"
               animate={inView ? 'visible' : 'hidden'}
             >
-            {DATA.map((item, index) => (
-              <motion.div key={item.id} variants={rowIn} className="flex flex-col">
-                <div className="flex items-center py-[8px] gap-3">
-                  <span style={{ color: '#54fafe', fontSize: 8 }}>▶</span>
-                  <span style={{
-                    fontFamily: "'Bebas Neue', sans-serif",
-                    fontSize: 12, letterSpacing: 3, color: '#8ef5ff',
-                    width: 64, flexShrink: 0,
-                  }}>
-                    {item.id}
-                  </span>
-                  <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11 }}>:</span>
-                  <span style={{ fontFamily: "'Rajdhani', sans-serif", fontWeight: 600, fontSize: 14, color: '#f6fbff' }}>
-                    {item.value}
-                  </span>
-                </div>
-                {index !== DATA.length - 1 && (
-                  <div style={{ height: 1, background: 'rgba(133,244,255,0.1)' }} />
-                )}
-              </motion.div>
-            ))}
+              {DATA.map((item, index) => (
+                <motion.div key={item.id} variants={rowIn} className="flex flex-col">
+                  <div className="flex items-center py-[8px] gap-3">
+                    <span style={{ color: '#54fafe', fontSize: 8 }}>▶</span>
+                    <span style={{
+                      fontFamily: "'Bebas Neue', sans-serif",
+                      fontSize: 12, letterSpacing: 3, color: '#8ef5ff',
+                      width: 80, flexShrink: 0,
+                    }}>
+                      {item.id}
+                    </span>
+                    <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11 }}>:</span>
+                    <span style={{ fontFamily: "'Rajdhani', sans-serif", fontWeight: 600, fontSize: 16, color: '#f6fbff', textAlign: 'left' }}>
+                      {item.value}
+                    </span>
+                  </div>
+                  {index !== DATA.length - 1 && (
+                    <div style={{ height: 1, background: 'rgba(133,244,255,0.1)' }} />
+                  )}
+                </motion.div>
+              ))}
             </motion.div>
           </div>
         </motion.div>
