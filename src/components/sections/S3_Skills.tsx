@@ -148,16 +148,19 @@ export function S3_Skills() {
                       left: 14,
                       top: '50%',
                       transform: `translateY(-50%) skewX(${-SKEW}deg)`,
-                      background: CYAN,
-                      color: NAVY_DEEP,
-                      padding: '3px 9px',
-                      fontFamily: "'Anton', sans-serif",
-                      fontSize: 18,
-                      lineHeight: 1.2,
-                      letterSpacing: '0.05em',
+                      width: 36,
+                      height: 44,
+                      background: '#0b113d',
+                      border: '2px solid #9cf7ff',
+                      clipPath: 'polygon(14% 0, 100% 0, 84% 100%, 0 100%)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
                     }}
                   >
-                    {skill.id}
+                    <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, color: '#d2fdff' }}>
+                      {skill.id}
+                    </span>
                   </div>
 
                   {/* Inner content (counter-skew) */}
