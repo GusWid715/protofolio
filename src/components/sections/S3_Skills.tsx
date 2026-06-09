@@ -152,7 +152,7 @@ export function S3_Skills() {
                       height: 44,
                       background: '#0b113d',
                       border: '2px solid #9cf7ff',
-                      clipPath: 'polygon(14% 0, 100% 0, 84% 100%, 0 100%)',
+                      clipPath: 'polygon(0 0, 86% 0, 100% 100%, 14% 100%)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -289,19 +289,17 @@ export function S3_Skills() {
                     }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', gap: 14, transform: `skewX(${-SKEW}deg)` }}>
-                      <span
-                        style={{
-                          background: '#000',
-                          color: '#fff',
-                          padding: '4px 12px',
-                          fontFamily: "'Anton', sans-serif",
-                          fontSize: 22,
-                          lineHeight: 1.2,
-                          letterSpacing: '0.05em',
-                        }}
-                      >
-                        {active.id}
-                      </span>
+                      <div style={{
+                        width: 44, height: 54, flexShrink: 0,
+                        background: '#0b113d',
+                        border: '2px solid #9cf7ff',
+                        clipPath: 'polygon(0 0, 86% 0, 100% 100%, 14% 100%)',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      }}>
+                        <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 24, color: '#d2fdff' }}>
+                          {active.id}
+                        </span>
+                      </div>
                       <span
                         style={{
                           fontFamily: "'Anton', sans-serif",

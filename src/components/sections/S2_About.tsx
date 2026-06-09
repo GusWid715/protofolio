@@ -123,7 +123,7 @@ export function S2_About() {
                         width: 36, height: 44, flexShrink: 0,
                         background: '#0b113d',
                         border: '2px solid #9cf7ff',
-                        clipPath: 'polygon(14% 0, 100% 0, 84% 100%, 0 100%)',
+                        clipPath: 'polygon(0 0, 86% 0, 100% 100%, 14% 100%)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                       }}>
                         <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, color: '#d2fdff' }}>
