@@ -42,8 +42,8 @@ const PHASES = [
     // Bottom-right, nudged slightly inward so it doesn't clip
     bottom: '0', left: 'auto', right: '3vw',
     x: '0%',
-    scale:  0.85,
-    height: '85vh',
+    scale:  1.0,
+    height: '100vh',
   },
   {
     img:   '/images/char_projects.png',
