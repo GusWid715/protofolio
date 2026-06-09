@@ -170,7 +170,7 @@ export function S3_Skills() {
                     }}
                   >
                     {/* Name + subtitle */}
-                    <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minWidth: 0 }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minWidth: 0, marginRight: 20 }}>
                       <span
                         style={{
                           fontFamily: "'Anton', sans-serif",
@@ -188,13 +188,17 @@ export function S3_Skills() {
                       </span>
                       <span
                         style={{
+                          display: 'block',
+                          width: '100%',
+                          background: isActive ? '#000' : CYAN,
+                          padding: '4px 8px',
+                          marginTop: 6,
                           fontFamily: "'Bebas Neue', sans-serif",
                           fontSize: 'clamp(10px, 0.8vw, 14px)',
                           fontWeight: 400,
                           letterSpacing: '0.12em',
-                          color: isActive ? 'rgba(0,0,0,0.5)' : 'rgba(133,244,255,0.45)',
-                          marginTop: 4,
-                          transition: 'color 0.25s ease',
+                          color: isActive ? CYAN : NAVY_DEEP,
+                          transition: 'background 0.25s ease, color 0.25s ease',
                           textTransform: 'uppercase',
                         }}
                       >
