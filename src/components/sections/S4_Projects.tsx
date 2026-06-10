@@ -103,7 +103,7 @@ export function S4_Projects() {
     return () => window.removeEventListener('wheel', onWheel)
   }, [])
 
-  const bgCurrent = activeIdx === 0 ? '#323539' : PROJECTS[activeIdx].bgColor
+  const bgCurrent = activeIdx === 0 ? '#010eb3' : PROJECTS[activeIdx].bgColor
 
   return (
     <>
