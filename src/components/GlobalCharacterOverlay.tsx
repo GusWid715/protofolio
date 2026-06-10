@@ -11,7 +11,7 @@
  *   0   (0.00–0.125)  S1 Welcome   → char_welcome.png   center
  *   1   (0.125–0.375) S2 About Me  → char_about.png     right
  *   2   (0.375–0.625) S3 Skills    → char_skills.png    right-nudged
- *   3   (0.625–0.875) S4 Projects  → char_projects.png  left
+ *   3   (0.625–0.875) S4 Projects  → (none)
  *   4   (0.875–1.00)  S5 Contact   → char_footer.png    center
  */
 
@@ -46,8 +46,8 @@ const PHASES = [
     height: '115vh',
   },
   {
-    img:   '/images/char_projects.png',
-    // Bottom-right (matches previous sections)
+    img:   '', // Empty string means no character for this section
+    // Fallback values so types are happy
     bottom: '0', left: 'auto', right: '-2vw',
     x: '0%',
     scale:  0.90,
@@ -95,46 +95,48 @@ export function GlobalCharacterOverlay() {
       aria-hidden="true"
     >
       <AnimatePresence mode="sync">
-        <motion.img
-          key={phase.img}
-          src={phase.img}
-          alt={`character section ${activeIdx + 1}`}
-          draggable={false}
-          // ── Enter ──────────────────────────────────────────────────────────
-          initial={{
-            opacity: 0,
-            scale: phase.scale * 0.93,
-            x: phase.x,
-          }}
-          animate={{
-            opacity: 1,
-            scale: phase.scale,
-            x: phase.x,
-          }}
-          // ── Exit ───────────────────────────────────────────────────────────
-          exit={{
-            opacity: 0,
-            scale: phase.scale * 0.93,
-            x: phase.x,
-          }}
-          transition={{
-            opacity: { duration: 0.55, ease: 'easeInOut' },
-            scale:   { duration: 0.75, ease: [0.22, 1, 0.36, 1] },
-          }}
-          style={{
-            position: 'absolute',
-            bottom:   phase.bottom,
-            left:     phase.left,
-            right:    phase.right,
-            height:   phase.height,
-            width:    'auto',
-            maxWidth: 'none',
-            objectFit: 'contain',
-            transformOrigin: 'bottom center',
-            userSelect:    'none',
-            pointerEvents: 'none',
-          }}
-        />
+        {phase.img && (
+          <motion.img
+            key={phase.img}
+            src={phase.img}
+            alt={`character section ${activeIdx + 1}`}
+            draggable={false}
+            // ── Enter ──────────────────────────────────────────────────────────
+            initial={{
+              opacity: 0,
+              scale: phase.scale * 0.93,
+              x: phase.x,
+            }}
+            animate={{
+              opacity: 1,
+              scale: phase.scale,
+              x: phase.x,
+            }}
+            // ── Exit ───────────────────────────────────────────────────────────
+            exit={{
+              opacity: 0,
+              scale: phase.scale * 0.93,
+              x: phase.x,
+            }}
+            transition={{
+              opacity: { duration: 0.55, ease: 'easeInOut' },
+              scale:   { duration: 0.75, ease: [0.22, 1, 0.36, 1] },
+            }}
+            style={{
+              position: 'absolute',
+              bottom:   phase.bottom,
+              left:     phase.left,
+              right:    phase.right,
+              height:   phase.height,
+              width:    'auto',
+              maxWidth: 'none',
+              objectFit: 'contain',
+              transformOrigin: 'bottom center',
+              userSelect:    'none',
+              pointerEvents: 'none',
+            }}
+          />
+        )}
       </AnimatePresence>
     </div>
   )
