@@ -149,14 +149,14 @@ export function S4_Projects() {
             </motion.div>
           </div>
 
-          {/* Project Images */}
+          {/* Project Cards */}
           {PROJECTS.map((p, i) => {
             const isActive = activeIdx === i;
             return (
               <div 
                 key={i} 
                 className="shrink-0 relative cursor-pointer group flex items-center justify-center"
-                style={{ width: '30vw', marginLeft: '2.5vw', marginRight: '2.5vw', height: '80vh' }}
+                style={{ width: '30vw', marginLeft: '2.5vw', marginRight: '2.5vw', height: '60vh' }}
                 onClick={() => {
                   setSelected(p)
                   changeSlide(i)
@@ -169,18 +169,62 @@ export function S4_Projects() {
                     y: isActive ? 0 : 30
                   }}
                   transition={{ duration: animDuration, ease: [0.33, 1, 0.68, 1] }}
-                  className="w-full h-full flex flex-col items-center justify-end relative"
+                  className="w-full h-full"
                 >
-                  <img src={p.image} alt={p.title} className="w-full h-full object-contain drop-shadow-2xl" />
-                  
-                  {/* Name Label */}
-                  <div className="absolute bottom-[5%] text-center w-full">
-                    <span 
-                      className="text-[#333] font-rajdhani font-bold bg-white/90 px-6 py-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-sm"
-                      style={{ fontSize: 'clamp(14px, 1.5vw, 28px)', boxShadow: '0 4px 15px rgba(0,0,0,0.2)' }}
-                    >
-                      {p.title} &rarr;
-                    </span>
+                  <div style={{
+                    height: '100%',
+                    transform: 'skewX(-12deg)',
+                    borderLeft: '5px solid #54fafe',
+                    boxShadow: '10px 8px 0px 0px rgba(255, 0, 0, 0.5)',
+                    overflow: 'hidden',
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}>
+                    {/* TOP BAR */}
+                    <div style={{
+                      background: '#ffffff',
+                      padding: '16px 24px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      minHeight: 64,
+                    }}>
+                      <div style={{ transform: 'skewX(12deg)', display: 'flex', gap: 14, alignItems: 'center' }}>
+                        <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 32, lineHeight: 1, color: '#000' }}>0{i+1}</div>
+                        <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 32, lineHeight: 0.92, letterSpacing: 1, color: '#000' }}>{p.title.toUpperCase()}</div>
+                      </div>
+                    </div>
+
+                    {/* CONTENT */}
+                    <div className="flex-1 p-8 flex flex-col justify-between" style={{ background: '#10185f' }}>
+                      <div className="flex-1 flex flex-col justify-between" style={{ transform: 'skewX(12deg)' }}>
+                        <div>
+                          <p className="font-bebas text-[22px] tracking-[1px] text-[#94f4ff] mb-2">
+                            -- PROJECT DESCRIPTION
+                          </p>
+                          <p className="font-montserrat text-[15px] font-medium text-[#f2fcff] leading-relaxed">
+                            {p.description}
+                          </p>
+                        </div>
+                        <div>
+                          <div className="flex flex-wrap gap-2 mb-4 mt-6">
+                            {p.techStack.map(tech => (
+                              <span
+                                key={tech}
+                                className="font-bebas text-[18px] px-3 py-1 text-[#06133b]"
+                                style={{
+                                  background: '#8df6ff',
+                                }}
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                          <p className="font-orbitron text-[10px] tracking-[3px] text-[#8ef5ff]/70 uppercase">
+                            ↵ Press to expand
+                          </p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </motion.div>
               </div>
