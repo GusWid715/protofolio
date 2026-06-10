@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import { modalOverlay, modalContent, staggerContainer, slideInLeft } from '@/animations/variants'
-import { SlashLabel, GhostText } from '@/components/shared'
+import { GhostText } from '@/components/shared'
 
 interface Project {
   title: string
@@ -56,19 +56,23 @@ export function S4_Projects() {
             className="absolute inset-0"
           >
             {/* Header */}
-            <motion.div variants={slideInLeft} className="absolute top-12 left-12 z-10 flex flex-col pointer-events-none">
-              <SlashLabel text="// SECTION 04" />
-              <h2 className="font-anton text-[72px] leading-[0.9] text-[#f6fbff] tracking-[2px] mb-2">
-                PROJECTS
-              </h2>
-            </motion.div>
+            <div className="absolute top-0 left-0 w-full px-8 md:px-14 pt-[12vh] pointer-events-none z-10">
+              <motion.div variants={slideInLeft}>
+                <h2 
+                  className="font-anton leading-[0.9] text-[#f6fbff] tracking-[2px] ml-3 mb-2"
+                  style={{ fontSize: 'clamp(44px, 5.5vw, 72px)' }}
+                >
+                  PROJECTS
+                </h2>
+              </motion.div>
+            </div>
 
             {/* Horizontal track */}
             <div
               className="absolute top-0 left-0 w-full h-full flex flex-row flex-nowrap items-center overflow-x-auto snap-x snap-mandatory scroll-smooth"
               style={{
                 paddingTop: '100px',
-                paddingLeft: '12vw',
+                paddingLeft: '42vw',
                 paddingRight: '12vw',
                 gap: '4vw',
                 scrollbarWidth: 'none',
