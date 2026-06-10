@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import { modalOverlay, modalContent, staggerContainer, slideInLeft } from '@/animations/variants'
 import { GhostText } from '@/components/shared'
@@ -42,6 +42,44 @@ export function S4_Projects() {
   const ref = useRef<HTMLElement>(null)
   const inView = useInView(ref, { once: true, margin: '-10%' })
 
+  const [activeIdx, setActiveIdx] = useState(0)
+  const activeIdxRef = useRef(0)
+  const cooldownRef = useRef(false)
+  const trackRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const COOLDOWN_MS = 500
+    const onWheel = (e: WheelEvent) => {
+      const el = ref.current
+      if (!el) return
+      const { top } = el.getBoundingClientRect()
+      if (Math.abs(top) > window.innerHeight * 0.15) return
+
+      const going = e.deltaY > 0 ? 1 : -1
+      const current = activeIdxRef.current
+      const next = current + going
+
+      if (next >= 0 && next < PROJECTS.length) {
+        e.preventDefault()
+        if (cooldownRef.current) return
+        cooldownRef.current = true
+        setTimeout(() => { cooldownRef.current = false }, COOLDOWN_MS)
+        activeIdxRef.current = next
+        setActiveIdx(next)
+      }
+    }
+    window.addEventListener('wheel', onWheel, { passive: false })
+    return () => window.removeEventListener('wheel', onWheel)
+  }, [])
+
+  useEffect(() => {
+    if (trackRef.current) {
+      // 28vw width + 4vw gap = 32vw per step
+      const step = window.innerWidth * 0.32
+      trackRef.current.scrollTo({ left: activeIdx * step, behavior: 'smooth' })
+    }
+  }, [activeIdx])
+
   return (
     <>
       <section ref={ref} className="relative h-screen" id="s4-projects">
@@ -69,11 +107,12 @@ export function S4_Projects() {
 
             {/* Horizontal track */}
             <div
-              className="absolute top-0 left-0 w-full h-full flex flex-row flex-nowrap items-center overflow-x-auto snap-x snap-mandatory scroll-smooth"
+              ref={trackRef}
+              className="absolute top-0 left-0 w-full h-full flex flex-row flex-nowrap items-center overflow-x-hidden"
               style={{
                 paddingTop: '100px',
                 paddingLeft: '12vw',
-                paddingRight: '12vw',
+                paddingRight: '60vw',
                 gap: '4vw',
                 scrollbarWidth: 'none',
                 msOverflowStyle: 'none',
@@ -83,9 +122,13 @@ export function S4_Projects() {
               <motion.div
                 key={project.title}
                 variants={slideInLeft}
-                className="shrink-0 w-[28vw] cursor-pointer snap-center"
+                className={`shrink-0 w-[28vw] cursor-pointer transition-opacity duration-500 ${i === activeIdx ? 'opacity-100' : 'opacity-40'}`}
                 whileHover={{ scale: 1.03, y: -6 }}
-                onClick={() => setSelected(project)}
+                onClick={() => {
+                  setSelected(project)
+                  setActiveIdx(i)
+                  activeIdxRef.current = i
+                }}
                 style={{ height: '55vh' }}
               >
                 <div style={{
