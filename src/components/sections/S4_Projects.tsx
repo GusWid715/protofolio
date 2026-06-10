@@ -55,9 +55,31 @@ export function S4_Projects() {
   const [activeIdx, setActiveIdx] = useState(0)
   const activeIdxRef = useRef(0)
   const cooldownRef = useRef(false)
+  const [animDuration, setAnimDuration] = useState(0.6)
+
+  const getOffset = (idx: number) => {
+    if (idx === 0) return 0;
+    return 52.5 + (idx - 1) * 35;
+  }
+
+  const changeSlide = (next: number) => {
+    const current = activeIdxRef.current
+    if (next === current) return 0
+    
+    const dist = Math.abs(getOffset(next) - getOffset(current))
+    // Calculate duration so that speed is constant (35vw per 0.6s = 58.33 vw/s)
+    let duration = dist / 58.33
+    // Cap duration to keep it feeling snappy
+    if (duration > 1.2) duration = 1.2
+    if (duration < 0.4) duration = 0.4
+
+    setAnimDuration(duration)
+    activeIdxRef.current = next
+    setActiveIdx(next)
+    return duration
+  }
 
   useEffect(() => {
-    const COOLDOWN_MS = 600
     const onWheel = (e: WheelEvent) => {
       const el = ref.current
       if (!el) return
@@ -72,9 +94,9 @@ export function S4_Projects() {
         e.preventDefault()
         if (cooldownRef.current) return
         cooldownRef.current = true
-        setTimeout(() => { cooldownRef.current = false }, COOLDOWN_MS)
-        activeIdxRef.current = next
-        setActiveIdx(next)
+        
+        const durationSec = changeSlide(next)
+        setTimeout(() => { cooldownRef.current = false }, durationSec * 1000)
       }
     }
     window.addEventListener('wheel', onWheel, { passive: false })
@@ -83,11 +105,6 @@ export function S4_Projects() {
 
   const bgCurrent = activeIdx === 0 ? 'transparent' : PROJECTS[activeIdx].bgColor
 
-  const getOffset = (idx: number) => {
-    if (idx === 0) return 0;
-    return 52.5 + (idx - 1) * 35;
-  }
-
   return (
     <>
       <motion.section 
@@ -95,7 +112,7 @@ export function S4_Projects() {
         className="relative h-screen w-screen overflow-hidden" 
         id="s4-projects"
         animate={{ backgroundColor: bgCurrent }}
-        transition={{ duration: 0.6, ease: "easeInOut" }}
+        transition={{ duration: animDuration, ease: "easeInOut" }}
       >
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <GhostText text="PROJECT" className="bottom-[-2vh] right-[-1vw] opacity-10 text-white" />
@@ -105,7 +122,7 @@ export function S4_Projects() {
         <motion.div 
           className="absolute top-0 left-0 h-full flex flex-row items-center"
           animate={{ x: `-${getOffset(activeIdx)}vw` }}
-          transition={{ duration: 0.6, ease: [0.33, 1, 0.68, 1] }}
+          transition={{ duration: animDuration, ease: [0.33, 1, 0.68, 1] }}
           style={{ width: `${52.5 + PROJECTS.length * 35}vw` }}
         >
           {/* Item 0: Title Block */}
@@ -142,8 +159,7 @@ export function S4_Projects() {
                 style={{ width: '30vw', marginLeft: '2.5vw', marginRight: '2.5vw', height: '80vh' }}
                 onClick={() => {
                   setSelected(p)
-                  setActiveIdx(i)
-                  activeIdxRef.current = i
+                  changeSlide(i)
                 }}
               >
                 <motion.div
@@ -152,7 +168,7 @@ export function S4_Projects() {
                     opacity: isActive ? 1 : 0.4,
                     y: isActive ? 0 : 30
                   }}
-                  transition={{ duration: 0.6, ease: [0.33, 1, 0.68, 1] }}
+                  transition={{ duration: animDuration, ease: [0.33, 1, 0.68, 1] }}
                   className="w-full h-full flex flex-col items-center justify-end relative"
                 >
                   <img src={p.image} alt={p.title} className="w-full h-full object-contain drop-shadow-2xl" />
