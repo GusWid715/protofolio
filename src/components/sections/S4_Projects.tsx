@@ -53,7 +53,7 @@ export function S4_Projects() {
             variants={staggerContainer}
             initial="hidden"
             animate={inView ? 'visible' : 'hidden'}
-            className="absolute inset-0"
+            className="absolute inset-0 z-10"
           >
             {/* Header */}
             <div className="absolute top-0 left-0 w-full px-8 md:px-14 pt-[12vh] pointer-events-none z-10">
@@ -72,7 +72,7 @@ export function S4_Projects() {
               className="absolute top-0 left-0 w-full h-full flex flex-row flex-nowrap items-center overflow-x-auto snap-x snap-mandatory scroll-smooth"
               style={{
                 paddingTop: '100px',
-                paddingLeft: '42vw',
+                paddingLeft: '12vw',
                 paddingRight: '12vw',
                 gap: '4vw',
                 scrollbarWidth: 'none',

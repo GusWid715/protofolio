@@ -47,8 +47,8 @@ const PHASES = [
   },
   {
     img:   '/images/char_projects.png',
-    // Bottom-left
-    bottom: '0', left: '0px', right: 'auto',
+    // Bottom-right (matches previous sections)
+    bottom: '0', left: 'auto', right: '-2vw',
     x: '0%',
     scale:  0.90,
     height: '85vh',
