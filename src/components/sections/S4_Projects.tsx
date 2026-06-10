@@ -173,7 +173,6 @@ export function S4_Projects() {
                 >
                   <div style={{
                     height: '100%',
-                    transform: 'skewX(-12deg)',
                     borderLeft: '5px solid #54fafe',
                     boxShadow: '10px 8px 0px 0px rgba(255, 0, 0, 0.5)',
                     overflow: 'hidden',
@@ -188,7 +187,7 @@ export function S4_Projects() {
                       alignItems: 'center',
                       minHeight: 64,
                     }}>
-                      <div style={{ transform: 'skewX(12deg)', display: 'flex', gap: 14, alignItems: 'center' }}>
+                      <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
                         <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 32, lineHeight: 1, color: '#000' }}>0{i+1}</div>
                         <div style={{ fontFamily: "'Anton', sans-serif", fontSize: 32, lineHeight: 0.92, letterSpacing: 1, color: '#000' }}>{p.title.toUpperCase()}</div>
                       </div>
@@ -196,7 +195,7 @@ export function S4_Projects() {
 
                     {/* CONTENT */}
                     <div className="flex-1 p-8 flex flex-col justify-between" style={{ background: '#10185f' }}>
-                      <div className="flex-1 flex flex-col justify-between" style={{ transform: 'skewX(12deg)' }}>
+                      <div className="flex-1 flex flex-col justify-between">
                         <div>
                           <p className="font-bebas text-[22px] tracking-[1px] text-[#94f4ff] mb-2">
                             -- PROJECT DESCRIPTION
