@@ -173,8 +173,8 @@ export function S4_Projects() {
                 >
                   <div style={{
                     height: '100%',
-                    borderLeft: '5px solid #54fafe',
-                    boxShadow: '10px 8px 0px 0px rgba(255, 0, 0, 0.5)',
+                    borderLeft: `5px solid ${p.bgColor}`,
+                    boxShadow: '10px 8px 0px 0px rgba(0, 0, 0, 0.4)',
                     overflow: 'hidden',
                     display: 'flex',
                     flexDirection: 'column',
@@ -197,7 +197,7 @@ export function S4_Projects() {
                     <div className="flex-1 p-8 flex flex-col justify-between" style={{ background: '#10185f' }}>
                       <div className="flex-1 flex flex-col justify-between">
                         <div>
-                          <p className="font-bebas text-[22px] tracking-[1px] text-[#94f4ff] mb-2">
+                          <p className="font-bebas text-[22px] tracking-[1px] mb-2" style={{ color: p.bgColor }}>
                             -- PROJECT DESCRIPTION
                           </p>
                           <p className="font-montserrat text-[15px] font-medium text-[#f2fcff] leading-relaxed">
@@ -211,14 +211,14 @@ export function S4_Projects() {
                                 key={tech}
                                 className="font-bebas text-[18px] px-3 py-1 text-[#06133b]"
                                 style={{
-                                  background: '#8df6ff',
+                                  background: p.bgColor,
                                 }}
                               >
                                 {tech}
                               </span>
                             ))}
                           </div>
-                          <p className="font-orbitron text-[10px] tracking-[3px] text-[#8ef5ff]/70 uppercase">
+                          <p className="font-orbitron text-[10px] tracking-[3px] text-white/50 uppercase">
                             ↵ Press to expand
                           </p>
                         </div>
