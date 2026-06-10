@@ -42,7 +42,7 @@ const PROJECTS: Project[] = [
     url: 'https://github.com/GusWid715/ADUIN-Capstone-Project-Dataset',
     description: 'Dataset dan pipeline analisis data untuk proyek capstone machine learning berbasis data publik.',
     techStack: ['Python', 'Pandas', 'Scikit-learn', 'Jupyter'],
-    image: '/images/char_projects.png',
+    image: '/images/char_footer.png',
     bgColor: '#5bf18b', // Green
   },
 ]
@@ -81,7 +81,7 @@ export function S4_Projects() {
     return () => window.removeEventListener('wheel', onWheel)
   }, [])
 
-  const bgCurrent = PROJECTS[activeIdx].bgColor
+  const bgCurrent = activeIdx === 0 ? 'transparent' : PROJECTS[activeIdx].bgColor
 
   const getOffset = (idx: number) => {
     if (idx === 0) return 0;
@@ -116,21 +116,16 @@ export function S4_Projects() {
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               <h1 
-                className="text-white drop-shadow-md" 
-                style={{ 
-                  fontFamily: "'Times New Roman', Times, serif", 
-                  fontSize: '11vw', 
-                  lineHeight: '1',
-                  letterSpacing: '0.02em' 
-                }}
+                className="font-anton leading-[0.9] text-[#f6fbff] tracking-[2px] ml-3 mb-2 drop-shadow-md"
+                style={{ fontSize: 'clamp(60px, 11vw, 160px)' }}
               >
-                PROJECT.
+                PROJECTS
               </h1>
-              <div className="mt-6">
-                <p className="text-white font-montserrat leading-relaxed max-w-[90%] drop-shadow" style={{ fontSize: 'clamp(14px, 1.4vw, 24px)' }}>
+              <div className="mt-6 ml-3">
+                <p className="text-[#f6fbff] font-rajdhani font-semibold leading-relaxed max-w-[90%] drop-shadow" style={{ fontSize: 'clamp(16px, 1.8vw, 28px)' }}>
                   An aggregation of projects vigilantly built to solve problems, will face the future.
                 </p>
-                <p className="text-white font-montserrat leading-relaxed max-w-[90%] mt-4 drop-shadow" style={{ fontSize: 'clamp(14px, 1.4vw, 24px)' }}>
+                <p className="text-[#f6fbff] font-rajdhani font-semibold leading-relaxed max-w-[90%] mt-4 drop-shadow" style={{ fontSize: 'clamp(16px, 1.8vw, 28px)' }}>
                   Time won't wait for you, technology won't stop for you.
                 </p>
               </div>
